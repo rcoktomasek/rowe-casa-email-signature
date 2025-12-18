@@ -206,6 +206,30 @@
   }
   details[open] .caret{ transform: rotate(0deg); }
 
+  .badgeWarn{
+    display:inline-flex;
+    align-items:center;
+    gap:6px;
+    font-size:12px;
+    font-weight:900;
+    color:#7a3b00;
+    background:#fff7ea;
+    border:1px solid #f0d7b8;
+    border-radius:999px;
+    padding:4px 10px;
+  }
+  .badgeWarn .icon{
+    width:18px; height:18px;
+    border-radius:99px;
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    background:#ffedd5;
+    border:1px solid #f0d7b8;
+    font-size:12px;
+    line-height:1;
+  }
+
   /* Help modal */
   .modalBackdrop{
     position:fixed; inset:0;
@@ -311,7 +335,7 @@
       <label for="phone" style="margin-top:12px;">Office Phone (optional)</label>
       <div class="phoneGroup">
         <input id="phone" placeholder="+1 (555) 555-5555 or (555) 555-5555" inputmode="tel" />
-        <input id="ext" placeholder="Ext (3–4)" inputmode="numeric" maxlength="4" />
+        <input id="ext" placeholder="Ext (1–4)" inputmode="numeric" maxlength="4" />
       </div>
       <div class="hint" style="margin-top:6px;">Extension: <b>Numbers only please.</b></div>
 
@@ -319,11 +343,6 @@
         <button id="btnReset" type="button">Reset</button>
         <button id="btnGenerate" class="primary" type="button">Generate</button>
         <button id="btnSave" type="button" disabled>Save to File</button>
-      </div>
-
-      <div class="micro">
-        <b>Important:</b> Delete your old signature(s) and paste this new signature into <b>every email app you use</b>
-        (Gmail web, Outlook desktop, Apple Mail, and mobile apps). To reset quickly, you can also refresh this page.
       </div>
 
       <div id="status" class="status"></div>
@@ -344,7 +363,13 @@
         If the divider line doesn’t appear in a specific app (common in Outlook for Mac), that’s okay.
       </p>
 
-      <div class="previewWrap" id="previewArea"></div>
+      <!-- IMPORTANT NOTE MOVED HERE (per your request) -->
+      <div class="micro" style="margin-top:10px;">
+        <b>Important:</b> Delete your old signature(s) and paste this new signature into <b>every email app you use</b>
+        (Gmail web, Outlook desktop, Apple Mail, and mobile apps). To reset quickly, you can also refresh this page.
+      </div>
+
+      <div class="previewWrap" id="previewArea" style="margin-top:12px;"></div>
 
       <div class="btnRow" style="margin-top:10px;">
         <button id="btnCopySignature" type="button" disabled>Copy Signature</button>
@@ -352,15 +377,47 @@
 
       <div class="divider"></div>
 
-      <!-- HTML (ACCORDION) -->
-      <details id="htmlDetails">
+      <!-- PLAIN TEXT (ACCORDION) — MOVED ABOVE HTML -->
+      <details id="plainTextDetails">
         <summary>
-          <span>HTML (Advanced / IT Use Only)</span>
+          <span>Plain Text (Last Resort / Special Use)</span>
           <span class="caret" aria-hidden="true">^</span>
         </summary>
         <div class="accBody">
+          <div class="badgeWarn" style="margin-bottom:10px;">
+            <span class="icon">!</span>
+            Last resort — do not use for standard email signatures
+          </div>
+
           <p class="sectionHelp" style="margin-top:0;">
-            Advanced fallback. <b>Do not paste this into Gmail</b>. Some clients (especially Outlook on Mac) will show the HTML code instead of formatting.
+            Use only if an app does not allow formatting/images (text-only fields).
+          </p>
+
+          <textarea id="plainOut" spellcheck="false" placeholder="Click Generate first to create plain text."></textarea>
+
+          <div class="btnRow" style="margin-top:10px;">
+            <button id="btnCopyText" type="button" disabled>Copy Plain Text</button>
+          </div>
+        </div>
+      </details>
+
+      <div class="divider"></div>
+
+      <!-- HTML (ACCORDION) -->
+      <details id="htmlDetails">
+        <summary>
+          <span>HTML (Last Resort / IT Use Only)</span>
+          <span class="caret" aria-hidden="true">^</span>
+        </summary>
+        <div class="accBody">
+          <div class="badgeWarn" style="margin-bottom:10px;">
+            <span class="icon">!</span>
+            Last resort — may show as code in some apps
+          </div>
+
+          <p class="sectionHelp" style="margin-top:0;">
+            Advanced fallback. Some apps (including Gmail and Outlook for Mac) may show this as code if pasted.
+            Only use if IT instructs you to.
           </p>
 
           <textarea id="htmlOut" spellcheck="false" placeholder="Click Generate first to create HTML."></textarea>
@@ -371,27 +428,6 @@
 
           <div class="hint">
             Plain-text soft-fail: if a recipient only allows plain text, their client will convert this HTML to text.
-          </div>
-        </div>
-      </details>
-
-      <div class="divider"></div>
-
-      <!-- PLAIN TEXT (ACCORDION) -->
-      <details id="plainTextDetails">
-        <summary>
-          <span>Plain Text (For text-only signatures)</span>
-          <span class="caret" aria-hidden="true">^</span>
-        </summary>
-        <div class="accBody">
-          <p class="sectionHelp" style="margin-top:0;">
-            Use only if an app does not allow formatting/images (text-only fields).
-          </p>
-
-          <textarea id="plainOut" spellcheck="false" placeholder="Click Generate first to create plain text."></textarea>
-
-          <div class="btnRow" style="margin-top:10px;">
-            <button id="btnCopyText" type="button" disabled>Copy Plain Text</button>
           </div>
         </div>
       </details>
@@ -420,7 +456,7 @@
       <li>Fill in <b>Full Name</b>, <b>Job Title</b>, and <b>Work Email</b> (must end with <b>@rowecasaorganics.com</b>).</li>
       <li>Click <b>Generate</b>.</li>
       <li><b>Most users:</b> click <b>Copy Signature</b> and paste into your email signature settings.</li>
-      <li><b>If it doesn’t paste correctly:</b> try <知道>Plain Text</b> for text-only fields. (HTML is advanced and may show as code in some apps.)</li>
+      <li><b>Only if needed:</b> use <b>Plain Text</b> for text-only fields. (HTML is last-resort and may show as code in some apps.)</li>
       <li><b>Mobile tip:</b> If your phone won’t paste nicely, email yourself a test message from your computer (with the signature),
         then copy the signature from that email on your phone and paste into your mobile mail app signature settings.</li>
     </ol>
@@ -455,10 +491,10 @@
     websiteUrl: "https://rowecasaorganics.com",
 
     // Signature layout
-    // (original 120px; 80% = 96px)
+    // original 120px; 80% = 96px
     logoWidthPx: 96,
     leftColPadRightPx: 14,
-    dividerPx: 2,
+    dividerPx: 1,                 // THINNER divider (1px)
     dividerColor: "#000000",
     rightColPadLeftPx: 14,
 
@@ -553,7 +589,7 @@
     return groupDigits(digits, [3,3,4,4]);
   }
 
-  // Extension: digits only, 3-4 digits if provided
+  // Extension: digits only, 1–4 digits if provided
   function normalizeExt(raw){
     const s = (raw || "").trim();
     if (!s) return "";
@@ -563,7 +599,7 @@
   function isValidExt(raw){
     const s = (raw || "").trim();
     if (!s) return true;
-    return /^\d{3,4}$/.test(s);
+    return /^\d{1,4}$/.test(s);
   }
 
   function getData(){
@@ -594,7 +630,7 @@
     }
 
     if (!isValidExt(d.extRaw)){
-      issues.push({ field:"ext", msg:"Office extension must be 3–4 digits (numbers only)." });
+      issues.push({ field:"ext", msg:"Office extension must be 1–4 digits (numbers only)." });
     }
 
     if (d.cellRaw && containsLetters(d.cellRaw)){
@@ -636,24 +672,30 @@
   }
 
   // ------------------------------------------------------------
-  // SIGNATURE HTML (more Outlook-friendly divider via dedicated TD)
+  // SIGNATURE HTML (Outlook-friendly divider via dedicated TD)
+  // + Adds C: and O: labels (conditional)
   // ------------------------------------------------------------
   function buildSignatureHtml(d){
     const cell = formatPhone(d.cellRaw);
     let office = formatPhone(d.officeRaw);
 
     const ext = normalizeExt(d.extRaw);
-    if (office && ext){
-      office += ` x ${ext}`;
+    const hasOffice = !!office;
+
+    // Extension display: x #### (only when office exists + ext provided)
+    let officeLine = "";
+    if (hasOffice){
+      officeLine = office;
+      if (ext){
+        officeLine += ` x ${ext}`;
+      }
     }
 
     const phoneLines = [];
-    if (cell)   phoneLines.push(`<div>${enc(cell)}</div>`);
-    if (office) phoneLines.push(`<div>${enc(office)}</div>`);
+    if (cell)      phoneLines.push(`<div>C: ${enc(cell)}</div>`);
+    if (officeLine)phoneLines.push(`<div>O: ${enc(officeLine)}</div>`);
     const phonesBlock = phoneLines.length ? ("\n        " + phoneLines.join("\n        ") + "\n") : "\n";
 
-    // NOTE: divider uses its own TD with bgcolor + background-color
-    // This tends to survive paste better than border-left in Outlook (incl. Mac).
     return `<!-- =====================================================
      ROWE CASA ORGANICS EMAIL SIGNATURE
      Version: ${BRAND.version}
@@ -717,8 +759,8 @@
     lines.push(left + sep + d.fullName);
     lines.push(padLeft("") + sep + d.jobTitle);
     lines.push(padLeft("") + sep + d.email);
-    if (cell)   lines.push(padLeft("") + sep + cell);
-    if (office) lines.push(padLeft("") + sep + office);
+    if (cell)   lines.push(padLeft("") + sep + `C: ${cell}`);
+    if (office) lines.push(padLeft("") + sep + `O: ${office}`);
     lines.push(padLeft("") + sep + BRAND.websiteText);
 
     return lines.join("\n");
@@ -752,7 +794,7 @@
 
     lockActions(false);
     if (showStatus){
-      setStatus(`<span class="ok">Ready.</span> Click <b>Copy Signature</b> and paste into your signature settings.`);
+      setStatus(`<span class="ok">Ready.</span> Click <b>Copy Signature</b> and paste into your email signature settings.`);
     }
     return { html, txt };
   }
@@ -786,6 +828,8 @@
 
   async function copySignatureWithFallback(btnId){
     const html = $("previewArea").innerHTML;
+
+    // Prefer rich clipboard (HTML + plain text)
     try{
       if (window.ClipboardItem && navigator.clipboard?.write){
         const htmlBlob = new Blob([html], { type: "text/html" });
@@ -796,7 +840,7 @@
       }
     } catch(_) { }
 
-    // fallback: copy plain text (still useful)
+    // Next best: plain text copy
     try{
       if (navigator.clipboard?.writeText){
         await navigator.clipboard.writeText(stripToText(html));
@@ -855,24 +899,33 @@
     const out = render(false);
     if (!out) return;
     const ok = await copySignatureWithFallback("btnCopySignature");
-    if (ok) setStatus(`<span class="ok">Copied!</span> Paste into your email signature settings.`);
-    else setStatus(`<span class="warn">Copy may be blocked.</span> Try selecting the signature area and copying manually, or use Plain Text.`);
+    if (ok){
+      setStatus(`<span class="ok">Copied!</span> Paste into your email signature settings.`);
+    } else {
+      setStatus(`<span class="warn">Copy may be blocked by your browser.</span> Try selecting the signature area and copying manually.`);
+    }
   });
 
   $("btnCopyHtml").addEventListener("click", async () => {
     const out = render(false);
     if (!out) return;
     const ok = await copyTextareaWithFallback($("htmlOut"), "btnCopyHtml");
-    if (ok) setStatus(`<span class="ok">Copied!</span> (Advanced)`);
-    else setStatus(`<span class="warn">Copy may be blocked.</span> The HTML is selected—copy it manually.`);
+    if (ok){
+      setStatus(`<span class="ok">Copied!</span> (Last resort / IT use only)`);
+    } else {
+      setStatus(`<span class="warn">Copy may be blocked.</span> The HTML is selected—copy it manually.`);
+    }
   });
 
   $("btnCopyText").addEventListener("click", async () => {
     const out = render(false);
     if (!out) return;
     const ok = await copyTextareaWithFallback($("plainOut"), "btnCopyText");
-    if (ok) setStatus(`<span class="ok">Copied!</span> Paste into any text-only signature field.`);
-    else setStatus(`<span class="warn">Copy may be blocked.</span> The text is selected—copy it manually.`);
+    if (ok){
+      setStatus(`<span class="ok">Copied!</span> Paste into any text-only signature field.`);
+    } else {
+      setStatus(`<span class="warn">Copy may be blocked.</span> The text is selected—copy it manually.`);
+    }
   });
 
   $("btnSave").addEventListener("click", () => {
