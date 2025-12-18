@@ -66,24 +66,6 @@
     box-shadow:0 0 0 3px rgba(255,255,255,.18);
   }
 
-  .videoBtn{
-    display:inline-flex;
-    align-items:center;
-    gap:8px;
-    padding:9px 12px;
-    border-radius:12px;
-    border:2px solid var(--helpRed);
-    background:transparent;
-    color:var(--helpRed);
-    font-weight:900;
-    cursor:pointer;
-    white-space:nowrap;
-    text-decoration:none;
-    transition: all 0.2s ease;
-  }
-  .videoBtn:hover{ background:rgba(176,0,32,.06); }
-  .videoBtn:active{ transform:translateY(1px); }
-
   .grid{ display:grid; grid-template-columns:380px 1fr; gap:14px; align-items:start; }
   @media (max-width:900px){ .grid{ grid-template-columns:1fr; } }
 
@@ -117,7 +99,6 @@
   input:focus{ border-color:#a99f96; box-shadow:0 0 0 3px rgba(95,75,60,.10); background:#fff; }
   input.invalid{ border-color:var(--danger); background:var(--dangerSoft); box-shadow:none; }
 
-  /* Office Phone + Ext on same line */
   .phoneGroup { display:flex; gap:8px; align-items:stretch; }
   .phoneGroup input:first-child { flex:1; }
   .phoneGroup input:last-child { width:110px; }
@@ -186,7 +167,7 @@
   .divider{ height:1px; background:var(--line); margin:12px 0; }
   .hint{ margin-top:8px; font-size:12px; color:#51565c; line-height:1.35; }
 
-  /* Accordion */
+  /* Accordions */
   details{
     border:1px solid var(--line);
     background:#fbfaf8;
@@ -207,7 +188,6 @@
   summary::-webkit-details-marker{ display:none; }
   .accBody{ margin-top:10px; }
 
-  /* Caret icon (^) */
   .caret{
     display:inline-flex;
     align-items:center;
@@ -221,7 +201,7 @@
     font-weight:900;
     line-height:1;
     flex:0 0 auto;
-    transform: rotate(180deg); /* default looks like v; flips to ^ when open */
+    transform: rotate(180deg);
     transition: transform .18s ease;
   }
   details[open] .caret{ transform: rotate(0deg); }
@@ -295,7 +275,7 @@
       <img id="uiLogo" alt="Rowe Casa Organics" />
       <div>
         <h1>Rowe Casa Organics Email Signature Builder</h1>
-        <p class="sub">Fill out the form → Preview → Copy → paste into your signature settings.</p>
+        <p class="sub">Fill out the form → Generate → Copy → paste into your signature settings.</p>
       </div>
     </div>
 
@@ -304,10 +284,6 @@
         <span class="dot"></span>
         Help / How-To
       </button>
-
-      <a class="videoBtn" id="btnVideoTop" href="#" target="_blank" rel="noopener noreferrer" aria-label="How-To Video">
-        How-To Video
-      </a>
     </div>
   </header>
 
@@ -341,7 +317,7 @@
 
       <div class="btnRow">
         <button id="btnReset" type="button">Reset</button>
-        <button id="btnPreview" class="primary" type="button">Preview</button>
+        <button id="btnGenerate" class="primary" type="button">Generate</button>
         <button id="btnSave" type="button" disabled>Save to File</button>
       </div>
 
@@ -361,48 +337,58 @@
 
     <!-- OUTPUT -->
     <div class="card">
-      <div class="sectionTitle"><h2>Preview</h2></div>
+      <!-- MAIN SIGNATURE -->
+      <div class="sectionTitle"><h2>Email Signature (Recommended)</h2></div>
       <p class="sectionHelp">
-        This is what your signature should look like. <b>Most users should copy this first.</b>
-        If it doesn’t paste correctly in a specific app, use the HTML or Plain Text options below.
+        <b>Use this for Gmail and most email apps.</b> Copy and paste into your email signature settings.
+        If the divider line doesn’t appear in a specific app (common in Outlook for Mac), that’s okay.
       </p>
 
       <div class="previewWrap" id="previewArea"></div>
 
       <div class="btnRow" style="margin-top:10px;">
-        <button id="btnCopyPreview" type="button" disabled>Copy Preview</button>
+        <button id="btnCopySignature" type="button" disabled>Copy Signature</button>
       </div>
 
       <div class="divider"></div>
 
-      <div class="sectionTitle"><h2>HTML</h2></div>
-      <p class="sectionHelp">
-        Best for Gmail/Outlook signature editors. Includes the required separator line <b>--</b> at the top.
-      </p>
-
-      <textarea id="htmlOut" spellcheck="false" placeholder="Click Preview to generate your signature HTML."></textarea>
-
-      <div class="btnRow" style="margin-top:10px;">
-        <button id="btnCopyHtml" type="button" disabled>Copy HTML</button>
-      </div>
-
-      <div class="hint">
-        Plain-text soft-fail: if a recipient only allows plain text, their client will convert this HTML to text.
-      </div>
-
-      <div class="divider"></div>
-
-      <details id="plainTextDetails">
+      <!-- HTML (ACCORDION) -->
+      <details id="htmlDetails">
         <summary>
-          <span>Plain Text: (For text-only signatures)</span>
+          <span>HTML (Advanced / IT Use Only)</span>
           <span class="caret" aria-hidden="true">^</span>
         </summary>
         <div class="accBody">
           <p class="sectionHelp" style="margin-top:0;">
-            This version is formatted to resemble the layout of the HTML signature as closely as plain text allows.
+            Advanced fallback. <b>Do not paste this into Gmail</b>. Some clients (especially Outlook on Mac) will show the HTML code instead of formatting.
           </p>
 
-          <textarea id="plainOut" spellcheck="false" placeholder="Click Preview first to generate plain text."></textarea>
+          <textarea id="htmlOut" spellcheck="false" placeholder="Click Generate first to create HTML."></textarea>
+
+          <div class="btnRow" style="margin-top:10px;">
+            <button id="btnCopyHtml" type="button" disabled>Copy HTML</button>
+          </div>
+
+          <div class="hint">
+            Plain-text soft-fail: if a recipient only allows plain text, their client will convert this HTML to text.
+          </div>
+        </div>
+      </details>
+
+      <div class="divider"></div>
+
+      <!-- PLAIN TEXT (ACCORDION) -->
+      <details id="plainTextDetails">
+        <summary>
+          <span>Plain Text (For text-only signatures)</span>
+          <span class="caret" aria-hidden="true">^</span>
+        </summary>
+        <div class="accBody">
+          <p class="sectionHelp" style="margin-top:0;">
+            Use only if an app does not allow formatting/images (text-only fields).
+          </p>
+
+          <textarea id="plainOut" spellcheck="false" placeholder="Click Generate first to create plain text."></textarea>
 
           <div class="btnRow" style="margin-top:10px;">
             <button id="btnCopyText" type="button" disabled>Copy Plain Text</button>
@@ -431,10 +417,10 @@
 
     <ol>
       <li><b>Delete old signatures</b> everywhere you use email (computer + phone).</li>
-      <li>Fill in <b>Full Name</b>, <b>Job Title</b>, and <b>Work Email</b> (must end with <b>@rowecasaorganics.com</b>). Phones are optional.</li>
-      <li>Click <b>Preview</b>.</li>
-      <li><b>Most users:</b> click <b>Copy Preview</b> and paste into your signature settings.</li>
-      <li><b>If it doesn’t paste correctly:</b> use <b>Copy HTML</b> (best for Gmail/Outlook editors) or <b>Copy Plain Text</b> for text-only fields.</li>
+      <li>Fill in <b>Full Name</b>, <b>Job Title</b>, and <b>Work Email</b> (must end with <b>@rowecasaorganics.com</b>).</li>
+      <li>Click <b>Generate</b>.</li>
+      <li><b>Most users:</b> click <b>Copy Signature</b> and paste into your email signature settings.</li>
+      <li><b>If it doesn’t paste correctly:</b> try <知道>Plain Text</b> for text-only fields. (HTML is advanced and may show as code in some apps.)</li>
       <li><b>Mobile tip:</b> If your phone won’t paste nicely, email yourself a test message from your computer (with the signature),
         then copy the signature from that email on your phone and paste into your mobile mail app signature settings.</li>
     </ol>
@@ -489,7 +475,6 @@
 
   function setVideoLinks(){
     $("loomLink").href = LOOM_VIDEO_URL;
-    $("btnVideoTop").href = LOOM_VIDEO_URL;
 
     const placeholder = isPlaceholderVideoUrl(LOOM_VIDEO_URL);
     if (placeholder){
@@ -497,7 +482,6 @@
         e.preventDefault();
         alert("How-To Video is not available yet. IT will add this link soon.");
       };
-      $("btnVideoTop").addEventListener("click", warn);
       $("loomLink").addEventListener("click", warn);
     }
   }
@@ -520,9 +504,9 @@
     return s.endsWith("@" + BRAND.approvedDomain);
   }
 
-  // ------------------------------------------------------------
-  // PHONE FORMATTING (best-effort, common standards)
-  // ------------------------------------------------------------
+  // -----------------------
+  // PHONE FORMATTING
+  // -----------------------
   function containsLetters(s){
     return /[A-Za-z]/.test(s || "");
   }
@@ -645,12 +629,15 @@
   function setStatus(html){ $("status").innerHTML = html; }
 
   function lockActions(locked){
+    $("btnCopySignature").disabled = locked;
     $("btnCopyHtml").disabled = locked;
     $("btnCopyText").disabled = locked;
-    $("btnCopyPreview").disabled = locked;
     $("btnSave").disabled = locked;
   }
 
+  // ------------------------------------------------------------
+  // SIGNATURE HTML (more Outlook-friendly divider via dedicated TD)
+  // ------------------------------------------------------------
   function buildSignatureHtml(d){
     const cell = formatPhone(d.cellRaw);
     let office = formatPhone(d.officeRaw);
@@ -665,6 +652,8 @@
     if (office) phoneLines.push(`<div>${enc(office)}</div>`);
     const phonesBlock = phoneLines.length ? ("\n        " + phoneLines.join("\n        ") + "\n") : "\n";
 
+    // NOTE: divider uses its own TD with bgcolor + background-color
+    // This tends to survive paste better than border-left in Outlook (incl. Mac).
     return `<!-- =====================================================
      ROWE CASA ORGANICS EMAIL SIGNATURE
      Version: ${BRAND.version}
@@ -679,7 +668,12 @@
            style="display:block; margin:0 auto; border:0; outline:none; text-decoration:none;">
     </td>
 
-    <td style="padding:0 0 0 ${BRAND.rightColPadLeftPx}px; vertical-align:top; border-left:${BRAND.dividerPx}px solid ${BRAND.dividerColor};">
+    <td width="${BRAND.dividerPx}" bgcolor="${BRAND.dividerColor}"
+        style="width:${BRAND.dividerPx}px; background-color:${BRAND.dividerColor}; font-size:0; line-height:0;">
+      &nbsp;
+    </td>
+
+    <td style="padding:0 0 0 ${BRAND.rightColPadLeftPx}px; vertical-align:top;">
       <div style="
         font-family:'Helvetica Neue', Helvetica, Arial, sans-serif;
         font-size:11pt;
@@ -758,7 +752,7 @@
 
     lockActions(false);
     if (showStatus){
-      setStatus(`<span class="ok">Ready.</span> Try <b>Copy Preview</b> first. If it doesn’t paste correctly, use <b>Copy HTML</b> or <b>Copy Plain Text</b>.`);
+      setStatus(`<span class="ok">Ready.</span> Click <b>Copy Signature</b> and paste into your signature settings.`);
     }
     return { html, txt };
   }
@@ -790,7 +784,7 @@
     return false;
   }
 
-  async function copyPreviewHtmlWithFallback(btnId){
+  async function copySignatureWithFallback(btnId){
     const html = $("previewArea").innerHTML;
     try{
       if (window.ClipboardItem && navigator.clipboard?.write){
@@ -802,6 +796,7 @@
       }
     } catch(_) { }
 
+    // fallback: copy plain text (still useful)
     try{
       if (navigator.clipboard?.writeText){
         await navigator.clipboard.writeText(stripToText(html));
@@ -842,24 +837,33 @@
     $("phone").value = "";
     $("ext").value = "";
     clearValidationUI();
-    $("previewArea").innerHTML = `<div class="hint">Click <b>Preview</b> to generate your signature.</div>`;
+    $("previewArea").innerHTML = `<div class="hint">Click <b>Generate</b> to create your signature.</div>`;
     $("htmlOut").value = "";
     $("plainOut").value = "";
-    setStatus(`Enter your details, then click <b>Preview</b>.`);
+    setStatus(`Enter your details, then click <b>Generate</b>.`);
     lockActions(true);
     try{ $("plainTextDetails").open = false; } catch(_) {}
+    try{ $("htmlDetails").open = false; } catch(_) {}
     window.scrollTo({ top: 0, behavior: "smooth" });
   }
 
   // Events
   $("btnReset").addEventListener("click", resetForm);
-  $("btnPreview").addEventListener("click", () => render(true));
+  $("btnGenerate").addEventListener("click", () => render(true));
+
+  $("btnCopySignature").addEventListener("click", async () => {
+    const out = render(false);
+    if (!out) return;
+    const ok = await copySignatureWithFallback("btnCopySignature");
+    if (ok) setStatus(`<span class="ok">Copied!</span> Paste into your email signature settings.`);
+    else setStatus(`<span class="warn">Copy may be blocked.</span> Try selecting the signature area and copying manually, or use Plain Text.`);
+  });
 
   $("btnCopyHtml").addEventListener("click", async () => {
     const out = render(false);
     if (!out) return;
     const ok = await copyTextareaWithFallback($("htmlOut"), "btnCopyHtml");
-    if (ok) setStatus(`<span class="ok">Copied!</span> Paste into your email signature settings.`);
+    if (ok) setStatus(`<span class="ok">Copied!</span> (Advanced)`);
     else setStatus(`<span class="warn">Copy may be blocked.</span> The HTML is selected—copy it manually.`);
   });
 
@@ -869,14 +873,6 @@
     const ok = await copyTextareaWithFallback($("plainOut"), "btnCopyText");
     if (ok) setStatus(`<span class="ok">Copied!</span> Paste into any text-only signature field.`);
     else setStatus(`<span class="warn">Copy may be blocked.</span> The text is selected—copy it manually.`);
-  });
-
-  $("btnCopyPreview").addEventListener("click", async () => {
-    const out = render(false);
-    if (!out) return;
-    const ok = await copyPreviewHtmlWithFallback("btnCopyPreview");
-    if (ok) setStatus(`<span class="ok">Copied!</span> Paste into your signature editor (or a rich-text field).`);
-    else setStatus(`<span class="warn">Copy may be blocked.</span> If needed, use Copy HTML or Copy Plain Text.`);
   });
 
   $("btnSave").addEventListener("click", () => {
@@ -901,8 +897,8 @@
   document.addEventListener("keydown", (e) => { if (e.key === "Escape") closeHelp(); });
 
   // Initial state
-  $("previewArea").innerHTML = `<div class="hint">Click <b>Preview</b> to generate your signature.</div>`;
-  setStatus(`Enter your details, then click <b>Preview</b>.`);
+  $("previewArea").innerHTML = `<div class="hint">Click <b>Generate</b> to create your signature.</div>`;
+  setStatus(`Enter your details, then click <b>Generate</b>.`);
   lockActions(true);
 </script>
 </body>
