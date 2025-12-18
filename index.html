@@ -1,0 +1,909 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Rowe Casa Organics Email Signature Builder</title>
+
+<style>
+  :root{
+    --bg:#d7d1ca;
+    --card:#ffffff;
+    --ink:#25282a;
+    --muted:#5f4b3c;
+    --line:#d6d1c3;
+    --soft:#f6f4f1;
+
+    --danger:#b00020;
+    --dangerSoft:#fff0f2;
+    --ok:#0a7a2f;
+    --warn:#9a5a00;
+
+    --helpRed:#b00020;
+    --helpRedHover:#8f001a;
+
+    font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  }
+
+  body{ margin:16px; background:var(--bg); color:var(--ink); }
+  .wrap{ max-width:1100px; margin:0 auto; }
+
+  header{
+    display:flex;
+    align-items:flex-start;
+    justify-content:space-between;
+    gap:12px;
+    flex-wrap:wrap;
+    margin-bottom:12px;
+  }
+  .titleRow{ display:flex; align-items:center; gap:12px; flex:1 1 auto; min-width:280px; }
+  .titleRow img{ width:34px; height:34px; border-radius:10px; background:var(--card); padding:6px; border:1px solid var(--line); }
+  h1{ margin:0; font-size:20px; letter-spacing:.2px; }
+  .sub{ margin:6px 0 0; color:#3b3f44; font-size:13px; line-height:1.35; }
+
+  .headerActions{ display:flex; gap:10px; align-items:center; flex-wrap:wrap; }
+
+  .helpBtn{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    padding:10px 12px;
+    border-radius:12px;
+    border:1px solid var(--helpRed);
+    background:var(--helpRed);
+    color:#fff;
+    font-weight:900;
+    cursor:pointer;
+    white-space:nowrap;
+    box-shadow:0 10px 20px rgba(176,0,32,.18);
+    text-decoration:none;
+    transition: all 0.2s ease;
+  }
+  .helpBtn:hover{ background:var(--helpRedHover); border-color:var(--helpRedHover); }
+  .helpBtn:active{ transform:translateY(1px); }
+  .helpBtn .dot{
+    width:8px; height:8px; border-radius:99px; background:#fff; opacity:.9;
+    box-shadow:0 0 0 3px rgba(255,255,255,.18);
+  }
+
+  .videoBtn{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    padding:9px 12px;
+    border-radius:12px;
+    border:2px solid var(--helpRed);
+    background:transparent;
+    color:var(--helpRed);
+    font-weight:900;
+    cursor:pointer;
+    white-space:nowrap;
+    text-decoration:none;
+    transition: all 0.2s ease;
+  }
+  .videoBtn:hover{ background:rgba(176,0,32,.06); }
+  .videoBtn:active{ transform:translateY(1px); }
+
+  .grid{ display:grid; grid-template-columns:380px 1fr; gap:14px; align-items:start; }
+  @media (max-width:900px){ .grid{ grid-template-columns:1fr; } }
+
+  .card{
+    background:var(--card);
+    border:1px solid var(--line);
+    border-radius:14px;
+    padding:14px;
+    box-shadow:0 10px 24px rgba(0,0,0,.06);
+  }
+
+  .sectionTitle{ display:flex; align-items:baseline; justify-content:space-between; gap:10px; flex-wrap:wrap; margin:0 0 8px; }
+  .sectionTitle h2{ margin:0; font-size:14px; letter-spacing:.2px; }
+  .sectionHelp{ margin:0; font-size:12px; color:#51565c; line-height:1.35; }
+  .sectionHelp b{ color:#1f2326; }
+
+  label{ display:block; font-size:12px; margin:10px 0 6px; color:#1f2326; }
+  .req::after{ content:" *"; color:var(--danger); font-weight:900; }
+
+  input{
+    width:100%;
+    padding:11px;
+    border:1px solid #cfc9c2;
+    border-radius:12px;
+    font-size:16px;
+    box-sizing:border-box;
+    background:var(--soft);
+    outline:none;
+    transition: border-color 0.2s, background 0.2s;
+  }
+  input:focus{ border-color:#a99f96; box-shadow:0 0 0 3px rgba(95,75,60,.10); background:#fff; }
+  input.invalid{ border-color:var(--danger); background:var(--dangerSoft); box-shadow:none; }
+
+  /* Office Phone + Ext on same line */
+  .phoneGroup { display:flex; gap:8px; align-items:stretch; }
+  .phoneGroup input:first-child { flex:1; }
+  .phoneGroup input:last-child { width:110px; }
+
+  .btnRow{ display:flex; gap:8px; margin-top:14px; flex-wrap:wrap; }
+  button{
+    padding:10px 14px;
+    border-radius:12px;
+    border:1px solid #c9c2bb;
+    background:#f3f1ee;
+    font-weight:900;
+    cursor:pointer;
+    color:var(--ink);
+    transition: all 0.2s ease;
+  }
+  button.primary{ background:#25282a; color:#fff; border-color:#25282a; }
+  button:disabled{ opacity:.55; cursor:not-allowed; }
+  button:active{ transform:translateY(1px); }
+
+  @keyframes flashSuccess {
+    0% { background-color: var(--ok); border-color: var(--ok); color: white; transform: scale(1.05); }
+    100% { transform: scale(1); }
+  }
+  button.copied { animation: flashSuccess 0.4s ease-out; }
+
+  .micro{
+    margin-top:10px;
+    padding:10px 11px;
+    border-radius:12px;
+    background:#fbfaf8;
+    border:1px solid var(--line);
+    font-size:12px;
+    color:#3b3f44;
+    line-height:1.35;
+  }
+  .micro b{ color:var(--ink); }
+
+  .status{ margin-top:10px; font-size:12px; line-height:1.35; min-height:34px; }
+  .status .ok{ color:var(--ok); font-weight:900; }
+  .status .warn{ color:var(--warn); font-weight:900; }
+  .status .err{ color:var(--danger); font-weight:900; }
+
+  .previewWrap{
+    padding:12px;
+    border:1px dashed #bdb4ab;
+    border-radius:14px;
+    background:#fbfaf8;
+    overflow-x:auto;
+  }
+
+  textarea{
+    width:100%;
+    min-height:220px;
+    padding:10px;
+    border:1px solid #cfc9c2;
+    border-radius:12px;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    font-size:12px;
+    box-sizing:border-box;
+    background:#fff;
+    outline:none;
+    white-space:pre;
+  }
+  textarea.invalid{ border-color:var(--danger); background:var(--dangerSoft); }
+
+  .divider{ height:1px; background:var(--line); margin:12px 0; }
+  .hint{ margin-top:8px; font-size:12px; color:#51565c; line-height:1.35; }
+
+  /* Accordion */
+  details{
+    border:1px solid var(--line);
+    background:#fbfaf8;
+    border-radius:14px;
+    padding:10px 12px;
+  }
+  summary{
+    cursor:pointer;
+    font-weight:900;
+    color:#1f2326;
+    list-style:none;
+    outline:none;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:12px;
+  }
+  summary::-webkit-details-marker{ display:none; }
+  .accBody{ margin-top:10px; }
+
+  /* Caret icon (^) */
+  .caret{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    width:30px;
+    height:30px;
+    border-radius:10px;
+    border:1px solid var(--line);
+    background:#fff;
+    color:#1f2326;
+    font-weight:900;
+    line-height:1;
+    flex:0 0 auto;
+    transform: rotate(180deg); /* default looks like v; flips to ^ when open */
+    transition: transform .18s ease;
+  }
+  details[open] .caret{ transform: rotate(0deg); }
+
+  /* Help modal */
+  .modalBackdrop{
+    position:fixed; inset:0;
+    background:rgba(37,40,42,.55);
+    display:none;
+    align-items:center;
+    justify-content:center;
+    padding:14px;
+    z-index:9999;
+    backdrop-filter: blur(2px);
+  }
+  .modal{
+    width:min(820px, 100%);
+    background:#fff;
+    border-radius:16px;
+    border:1px solid var(--line);
+    padding:14px;
+    box-shadow:0 18px 60px rgba(0,0,0,.22);
+  }
+  .modal h2{ margin:0 0 8px; font-size:16px; }
+  .modal p{ margin:8px 0; color:#2a2e32; font-size:13px; line-height:1.4; }
+  .modal ol{ margin:10px 0 0 18px; padding:0; }
+  .modal li{ margin:6px 0; color:#1f2326; font-size:13px; line-height:1.35; }
+  .modal .closeRow{ display:flex; justify-content:space-between; gap:8px; margin-top:12px; align-items:center; flex-wrap:wrap; }
+
+  .modal a.cta{
+    display:inline-block;
+    font-weight:900;
+    color:#fff;
+    background:var(--helpRed);
+    text-decoration:none;
+    padding:12px 14px;
+    border-radius:12px;
+    border:1px solid var(--helpRed);
+    box-shadow:0 10px 20px rgba(176,0,32,.18);
+  }
+  .modal a.cta:hover{ background:var(--helpRedHover); border-color:var(--helpRedHover); }
+
+  .callout{
+    margin-top:10px;
+    padding:10px 12px;
+    border-radius:14px;
+    border:1px solid rgba(176,0,32,.25);
+    background:rgba(176,0,32,.05);
+    color:#1f2326;
+    font-size:13px;
+    line-height:1.35;
+  }
+  .callout b{ color:var(--danger); }
+  .callout a{ color:var(--helpRed); font-weight:900; text-decoration:none; border-bottom:2px solid rgba(176,0,32,.25); }
+  .callout a:hover{ border-bottom-color: rgba(176,0,32,.6); }
+
+  .kbd{
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    background:#f3f1ee;
+    padding:2px 6px;
+    border-radius:7px;
+    border:1px solid var(--line);
+  }
+</style>
+</head>
+
+<body>
+<div class="wrap">
+  <header>
+    <div class="titleRow">
+      <img id="uiLogo" alt="Rowe Casa Organics" />
+      <div>
+        <h1>Rowe Casa Organics Email Signature Builder</h1>
+        <p class="sub">Fill out the form → Preview → Copy → paste into your signature settings.</p>
+      </div>
+    </div>
+
+    <div class="headerActions">
+      <button class="helpBtn" id="btnHelpTop" type="button" aria-label="Help / How-To">
+        <span class="dot"></span>
+        Help / How-To
+      </button>
+
+      <a class="videoBtn" id="btnVideoTop" href="#" target="_blank" rel="noopener noreferrer" aria-label="How-To Video">
+        How-To Video
+      </a>
+    </div>
+  </header>
+
+  <div class="grid">
+    <!-- FORM -->
+    <div class="card">
+      <div class="sectionTitle"><h2>Your Details</h2></div>
+      <p class="sectionHelp">Required fields are marked with <b>*</b>. Copy/Save stays disabled until everything is valid.</p>
+
+      <label class="req" for="fullName">Full Name</label>
+      <input id="fullName" placeholder="First Last" autocomplete="name" />
+
+      <label class="req" for="jobTitle">Job Title</label>
+      <input id="jobTitle" placeholder="Job Title" />
+
+      <label class="req" for="email">Work Email</label>
+      <input id="email" placeholder="first.last@rowecasaorganics.com" autocomplete="email" inputmode="email" />
+
+      <!-- Cell Phone: its own line -->
+      <label for="cell">Cell Phone (optional)</label>
+      <input id="cell" placeholder="+1 (555) 555-5555 or (555) 555-5555" inputmode="tel" />
+      <div class="hint" style="margin-top:6px;">All in one field. Country codes are allowed (ex: <b>+1</b>).</div>
+
+      <!-- Office Phone + Ext: same line -->
+      <label for="phone" style="margin-top:12px;">Office Phone (optional)</label>
+      <div class="phoneGroup">
+        <input id="phone" placeholder="+1 (555) 555-5555 or (555) 555-5555" inputmode="tel" />
+        <input id="ext" placeholder="Ext (3–4)" inputmode="numeric" maxlength="4" />
+      </div>
+      <div class="hint" style="margin-top:6px;">Extension: <b>Numbers only please.</b></div>
+
+      <div class="btnRow">
+        <button id="btnReset" type="button">Reset</button>
+        <button id="btnPreview" class="primary" type="button">Preview</button>
+        <button id="btnSave" type="button" disabled>Save to File</button>
+      </div>
+
+      <div class="micro">
+        <b>Important:</b> Delete your old signature(s) and paste this new signature into <b>every email app you use</b>
+        (Gmail web, Outlook desktop, Apple Mail, and mobile apps). To reset quickly, you can also refresh this page.
+      </div>
+
+      <div id="status" class="status"></div>
+
+      <div class="divider"></div>
+      <div class="hint">
+        If a Copy button is blocked: tap/click inside the box → Select All → Copy.
+        Desktop: <span class="kbd">Ctrl/Cmd+A</span> then <span class="kbd">Ctrl/Cmd+C</span>.
+      </div>
+    </div>
+
+    <!-- OUTPUT -->
+    <div class="card">
+      <div class="sectionTitle"><h2>Preview</h2></div>
+      <p class="sectionHelp">
+        This is what your signature should look like. <b>Most users should copy this first.</b>
+        If it doesn’t paste correctly in a specific app, use the HTML or Plain Text options below.
+      </p>
+
+      <div class="previewWrap" id="previewArea"></div>
+
+      <div class="btnRow" style="margin-top:10px;">
+        <button id="btnCopyPreview" type="button" disabled>Copy Preview</button>
+      </div>
+
+      <div class="divider"></div>
+
+      <div class="sectionTitle"><h2>HTML</h2></div>
+      <p class="sectionHelp">
+        Best for Gmail/Outlook signature editors. Includes the required separator line <b>--</b> at the top.
+      </p>
+
+      <textarea id="htmlOut" spellcheck="false" placeholder="Click Preview to generate your signature HTML."></textarea>
+
+      <div class="btnRow" style="margin-top:10px;">
+        <button id="btnCopyHtml" type="button" disabled>Copy HTML</button>
+      </div>
+
+      <div class="hint">
+        Plain-text soft-fail: if a recipient only allows plain text, their client will convert this HTML to text.
+      </div>
+
+      <div class="divider"></div>
+
+      <details id="plainTextDetails">
+        <summary>
+          <span>Plain Text: (For text-only signatures)</span>
+          <span class="caret" aria-hidden="true">^</span>
+        </summary>
+        <div class="accBody">
+          <p class="sectionHelp" style="margin-top:0;">
+            This version is formatted to resemble the layout of the HTML signature as closely as plain text allows.
+          </p>
+
+          <textarea id="plainOut" spellcheck="false" placeholder="Click Preview first to generate plain text."></textarea>
+
+          <div class="btnRow" style="margin-top:10px;">
+            <button id="btnCopyText" type="button" disabled>Copy Plain Text</button>
+          </div>
+        </div>
+      </details>
+    </div>
+  </div>
+</div>
+
+<!-- HELP MODAL -->
+<div class="modalBackdrop" id="helpBackdrop" role="dialog" aria-modal="true" aria-labelledby="helpTitle">
+  <div class="modal">
+    <h2 id="helpTitle">Help – Set up your Rowe Casa Organics email signature</h2>
+
+    <p>
+      <a class="cta" id="loomLink" href="#" target="_blank" rel="noopener noreferrer">
+        ▶ Watch the How-To Video
+      </a>
+    </p>
+
+    <div class="callout">
+      <b>Important:</b> First, delete your old signature(s). Then paste this new signature into <b>every email app you use</b>
+      (Gmail web, Outlook desktop, Apple Mail, and mobile apps). If you use more than one, update them all.
+    </div>
+
+    <ol>
+      <li><b>Delete old signatures</b> everywhere you use email (computer + phone).</li>
+      <li>Fill in <b>Full Name</b>, <b>Job Title</b>, and <b>Work Email</b> (must end with <b>@rowecasaorganics.com</b>). Phones are optional.</li>
+      <li>Click <b>Preview</b>.</li>
+      <li><b>Most users:</b> click <b>Copy Preview</b> and paste into your signature settings.</li>
+      <li><b>If it doesn’t paste correctly:</b> use <b>Copy HTML</b> (best for Gmail/Outlook editors) or <b>Copy Plain Text</b> for text-only fields.</li>
+      <li><b>Mobile tip:</b> If your phone won’t paste nicely, email yourself a test message from your computer (with the signature),
+        then copy the signature from that email on your phone and paste into your mobile mail app signature settings.</li>
+    </ol>
+
+    <div class="callout">
+      <b>Need help?</b> Contact IT at
+      <a href="mailto:itsupport@rowecasaorganics.com">itsupport@rowecasaorganics.com</a>.
+    </div>
+
+    <div class="closeRow">
+      <div class="hint" style="margin:0;">Press <span class="kbd">Esc</span> to close.</div>
+      <button id="btnCloseHelp" type="button">Close</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  // ============================================================
+  // QUICK CONFIG (Replace LOOM_VIDEO_URL when ready)
+  // ============================================================
+  const LOOM_VIDEO_URL = "https://www.loom.com/share/REPLACE_ME";
+
+  // ============================================================
+  // BRAND / TEMPLATE CONSTANTS
+  // ============================================================
+  const BRAND = Object.freeze({
+    version: "2025.1",
+    approvedDomain: "rowecasaorganics.com",
+
+    logoUrl: "https://www.rowecasaorganics.com/cdn/shop/files/Checkout_Logo.png",
+    websiteText: "rowecasaorganics.com",
+    websiteUrl: "https://rowecasaorganics.com",
+
+    // Signature layout
+    // (original 120px; 80% = 96px)
+    logoWidthPx: 96,
+    leftColPadRightPx: 14,
+    dividerPx: 2,
+    dividerColor: "#000000",
+    rightColPadLeftPx: 14,
+
+    linkColor: "#1155cc"
+  });
+
+  const $ = (id) => document.getElementById(id);
+
+  $("uiLogo").src = BRAND.logoUrl;
+
+  function isPlaceholderVideoUrl(url){
+    return !url || url.includes("REPLACE_ME");
+  }
+
+  function setVideoLinks(){
+    $("loomLink").href = LOOM_VIDEO_URL;
+    $("btnVideoTop").href = LOOM_VIDEO_URL;
+
+    const placeholder = isPlaceholderVideoUrl(LOOM_VIDEO_URL);
+    if (placeholder){
+      const warn = (e) => {
+        e.preventDefault();
+        alert("How-To Video is not available yet. IT will add this link soon.");
+      };
+      $("btnVideoTop").addEventListener("click", warn);
+      $("loomLink").addEventListener("click", warn);
+    }
+  }
+  setVideoLinks();
+
+  function enc(s){
+    return String(s ?? "")
+      .replaceAll("&","&amp;")
+      .replaceAll("<","&lt;")
+      .replaceAll(">","&gt;")
+      .replaceAll('"',"&quot;");
+  }
+
+  function isValidEmailCommon(v){
+    const s = v.trim();
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(s);
+  }
+  function hasApprovedDomain(v){
+    const s = v.trim().toLowerCase();
+    return s.endsWith("@" + BRAND.approvedDomain);
+  }
+
+  // ------------------------------------------------------------
+  // PHONE FORMATTING (best-effort, common standards)
+  // ------------------------------------------------------------
+  function containsLetters(s){
+    return /[A-Za-z]/.test(s || "");
+  }
+
+  function groupDigits(digits, groups){
+    let out = [];
+    let idx = 0;
+    for (const g of groups){
+      if (idx >= digits.length) break;
+      out.push(digits.slice(idx, idx+g));
+      idx += g;
+    }
+    if (idx < digits.length) out.push(digits.slice(idx));
+    return out.join(" ");
+  }
+
+  function formatPhone(raw){
+    const original = (raw || "").trim();
+    if (!original) return "";
+
+    const hasPlus = original.startsWith("+");
+    const digits = original.replace(/\D+/g, "");
+    if (!digits) return original;
+
+    if (hasPlus){
+      const ccLen = Math.min(3, Math.max(1, digits.length - 7));
+      const cc = digits.slice(0, ccLen);
+      const rest = digits.slice(ccLen);
+      const restGrouped = groupDigits(rest, [2,3,4,4]);
+      return `+${cc} ${restGrouped}`.trim();
+    }
+
+    if (digits.length === 10){
+      return `(${digits.slice(0,3)}) ${digits.slice(3,6)}-${digits.slice(6)}`;
+    }
+    if (digits.length === 11 && digits.startsWith("1")){
+      const d = digits.slice(1);
+      return `+1 (${d.slice(0,3)}) ${d.slice(3,6)}-${d.slice(6)}`;
+    }
+    if (digits.length === 7){
+      return `${digits.slice(0,3)}-${digits.slice(3)}`;
+    }
+
+    return groupDigits(digits, [3,3,4,4]);
+  }
+
+  // Extension: digits only, 3-4 digits if provided
+  function normalizeExt(raw){
+    const s = (raw || "").trim();
+    if (!s) return "";
+    const digitsOnly = s.replace(/\D+/g, "");
+    return digitsOnly.slice(0, 4);
+  }
+  function isValidExt(raw){
+    const s = (raw || "").trim();
+    if (!s) return true;
+    return /^\d{3,4}$/.test(s);
+  }
+
+  function getData(){
+    return {
+      fullName: $("fullName").value.trim(),
+      jobTitle: $("jobTitle").value.trim(),
+      email: $("email").value.trim(),
+      cellRaw: $("cell").value,
+      officeRaw: $("phone").value,
+      extRaw: $("ext").value.trim()
+    };
+  }
+
+  function validate(d){
+    const issues = [];
+
+    if (!d.fullName) issues.push({ field:"fullName", msg:"Full Name is required." });
+    if (!d.jobTitle) issues.push({ field:"jobTitle", msg:"Job Title is required." });
+
+    if (!d.email){
+      issues.push({ field:"email", msg:"Work Email is required." });
+    } else {
+      if (!isValidEmailCommon(d.email)){
+        issues.push({ field:"email", msg:"Work Email doesn’t look valid." });
+      } else if (!hasApprovedDomain(d.email)){
+        issues.push({ field:"email", msg:`Email must end with @${BRAND.approvedDomain}.` });
+      }
+    }
+
+    if (!isValidExt(d.extRaw)){
+      issues.push({ field:"ext", msg:"Office extension must be 3–4 digits (numbers only)." });
+    }
+
+    if (d.cellRaw && containsLetters(d.cellRaw)){
+      issues.push({ field:"cell", msg:"Cell phone must not contain letters." });
+    }
+    if (d.officeRaw && containsLetters(d.officeRaw)){
+      issues.push({ field:"phone", msg:"Office phone must not contain letters." });
+    }
+
+    return issues;
+  }
+
+  function clearValidationUI(){
+    ["fullName","jobTitle","email","cell","phone","ext"].forEach(id => $(id).classList.remove("invalid"));
+    $("htmlOut").classList.remove("invalid");
+    $("plainOut").classList.remove("invalid");
+  }
+
+  function applyValidationUI(issues){
+    clearValidationUI();
+    const marked = new Set();
+    for (const it of issues){
+      if (it.field && !marked.has(it.field)){
+        $(it.field).classList.add("invalid");
+        marked.add(it.field);
+      }
+    }
+    $("htmlOut").classList.add("invalid");
+    $("plainOut").classList.add("invalid");
+  }
+
+  function setStatus(html){ $("status").innerHTML = html; }
+
+  function lockActions(locked){
+    $("btnCopyHtml").disabled = locked;
+    $("btnCopyText").disabled = locked;
+    $("btnCopyPreview").disabled = locked;
+    $("btnSave").disabled = locked;
+  }
+
+  function buildSignatureHtml(d){
+    const cell = formatPhone(d.cellRaw);
+    let office = formatPhone(d.officeRaw);
+
+    const ext = normalizeExt(d.extRaw);
+    if (office && ext){
+      office += ` x ${ext}`;
+    }
+
+    const phoneLines = [];
+    if (cell)   phoneLines.push(`<div>${enc(cell)}</div>`);
+    if (office) phoneLines.push(`<div>${enc(office)}</div>`);
+    const phonesBlock = phoneLines.length ? ("\n        " + phoneLines.join("\n        ") + "\n") : "\n";
+
+    return `<!-- =====================================================
+     ROWE CASA ORGANICS EMAIL SIGNATURE
+     Version: ${BRAND.version}
+     ===================================================== -->
+<div>--</div>
+<table role="presentation" cellpadding="0" cellspacing="0" border="0" style="border-collapse:collapse; mso-table-lspace:0pt; mso-table-rspace:0pt;">
+  <tr>
+    <td style="padding:0 ${BRAND.leftColPadRightPx}px 0 0; vertical-align:middle; text-align:center;">
+      <img src="${enc(BRAND.logoUrl)}"
+           width="${BRAND.logoWidthPx}"
+           alt="Rowe Casa Organics"
+           style="display:block; margin:0 auto; border:0; outline:none; text-decoration:none;">
+    </td>
+
+    <td style="padding:0 0 0 ${BRAND.rightColPadLeftPx}px; vertical-align:top; border-left:${BRAND.dividerPx}px solid ${BRAND.dividerColor};">
+      <div style="
+        font-family:'Helvetica Neue', Helvetica, Arial, sans-serif;
+        font-size:11pt;
+        line-height:1.25;
+        mso-line-height-rule:exactly;
+        color:#000000;
+      ">
+        <div style="font-weight:700;">${enc(d.fullName)}</div>
+        <div style="font-weight:400;">${enc(d.jobTitle)}</div>
+
+        <div style="height:8px; line-height:8px; font-size:8px;">&nbsp;</div>
+
+        <div>
+          <a href="mailto:${enc(d.email)}" style="color:${BRAND.linkColor}; text-decoration:none;">${enc(d.email)}</a>
+        </div>${phonesBlock}
+        <div>
+          <a href="${enc(BRAND.websiteUrl)}" style="color:${BRAND.linkColor}; text-decoration:none;">${enc(BRAND.websiteText)}</a>
+        </div>
+      </div>
+    </td>
+  </tr>
+</table>`;
+  }
+
+  function buildPlainText(d){
+    const cell = formatPhone(d.cellRaw);
+    let office = formatPhone(d.officeRaw);
+    const ext = normalizeExt(d.extRaw);
+    if (office && ext){
+      office += ` x ${ext}`;
+    }
+
+    const left = "ROWE CASA ORGANICS";
+    const sep = " | ";
+    const leftWidth = left.length;
+    const padLeft = (s) => String(s ?? "").padStart(leftWidth, " ");
+
+    const lines = [];
+    lines.push("--");
+    lines.push("");
+    lines.push(left + sep + d.fullName);
+    lines.push(padLeft("") + sep + d.jobTitle);
+    lines.push(padLeft("") + sep + d.email);
+    if (cell)   lines.push(padLeft("") + sep + cell);
+    if (office) lines.push(padLeft("") + sep + office);
+    lines.push(padLeft("") + sep + BRAND.websiteText);
+
+    return lines.join("\n");
+  }
+
+  function render(showStatus=true){
+    $("ext").value = normalizeExt($("ext").value);
+
+    const d = getData();
+    const issues = validate(d);
+
+    if (issues.length){
+      applyValidationUI(issues);
+      lockActions(true);
+      $("previewArea").innerHTML = `<div class="hint"><span class="warn">Enter required fields to generate the signature.</span></div>`;
+      $("htmlOut").value = "";
+      $("plainOut").value = "";
+      if (showStatus){
+        setStatus(`<span class="err">Fix these items:</span><br>• ${issues.map(x=>x.msg).join("<br>• ")}`);
+      }
+      return null;
+    }
+
+    clearValidationUI();
+    const html = buildSignatureHtml(d);
+    const txt = buildPlainText(d);
+
+    $("previewArea").innerHTML = html;
+    $("htmlOut").value = html;
+    $("plainOut").value = txt;
+
+    lockActions(false);
+    if (showStatus){
+      setStatus(`<span class="ok">Ready.</span> Try <b>Copy Preview</b> first. If it doesn’t paste correctly, use <b>Copy HTML</b> or <b>Copy Plain Text</b>.`);
+    }
+    return { html, txt };
+  }
+
+  function flashBtn(btnId){
+    const btn = $(btnId);
+    if(!btn) return;
+    btn.classList.add("copied");
+    const orig = btn.innerText;
+    btn.innerText = "Copied!";
+    setTimeout(() => {
+      btn.classList.remove("copied");
+      btn.innerText = orig;
+    }, 1200);
+  }
+
+  async function copyTextareaWithFallback(textareaEl, btnId){
+    try{
+      if (navigator.clipboard?.writeText){
+        await navigator.clipboard.writeText(textareaEl.value);
+        flashBtn(btnId);
+        return true;
+      }
+    } catch(_) { }
+
+    textareaEl.focus();
+    textareaEl.select();
+    textareaEl.setSelectionRange(0, textareaEl.value.length);
+    return false;
+  }
+
+  async function copyPreviewHtmlWithFallback(btnId){
+    const html = $("previewArea").innerHTML;
+    try{
+      if (window.ClipboardItem && navigator.clipboard?.write){
+        const htmlBlob = new Blob([html], { type: "text/html" });
+        const textBlob = new Blob([stripToText(html)], { type: "text/plain" });
+        await navigator.clipboard.write([ new ClipboardItem({ "text/html": htmlBlob, "text/plain": textBlob }) ]);
+        flashBtn(btnId);
+        return true;
+      }
+    } catch(_) { }
+
+    try{
+      if (navigator.clipboard?.writeText){
+        await navigator.clipboard.writeText(stripToText(html));
+        flashBtn(btnId);
+        return true;
+      }
+    } catch(_) { }
+
+    return false;
+  }
+
+  function stripToText(html){
+    const tmp = document.createElement("div");
+    tmp.innerHTML = html;
+    tmp.querySelectorAll("br").forEach(br => br.replaceWith("\n"));
+    tmp.querySelectorAll("div, p, tr, td").forEach(el => {
+      if (!el.textContent.endsWith("\n")) el.appendChild(document.createTextNode("\n"));
+    });
+    return tmp.textContent.replace(/\n{3,}/g, "\n\n").trim();
+  }
+
+  function downloadFile(filename, text){
+    const blob = new Blob([text], { type: "text/html;charset=utf-8" });
+    const a = document.createElement("a");
+    a.href = URL.createObjectURL(blob);
+    a.download = filename;
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    setTimeout(() => URL.revokeObjectURL(a.href), 500);
+  }
+
+  function resetForm(){
+    $("fullName").value = "";
+    $("jobTitle").value = "";
+    $("email").value = "";
+    $("cell").value = "";
+    $("phone").value = "";
+    $("ext").value = "";
+    clearValidationUI();
+    $("previewArea").innerHTML = `<div class="hint">Click <b>Preview</b> to generate your signature.</div>`;
+    $("htmlOut").value = "";
+    $("plainOut").value = "";
+    setStatus(`Enter your details, then click <b>Preview</b>.`);
+    lockActions(true);
+    try{ $("plainTextDetails").open = false; } catch(_) {}
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }
+
+  // Events
+  $("btnReset").addEventListener("click", resetForm);
+  $("btnPreview").addEventListener("click", () => render(true));
+
+  $("btnCopyHtml").addEventListener("click", async () => {
+    const out = render(false);
+    if (!out) return;
+    const ok = await copyTextareaWithFallback($("htmlOut"), "btnCopyHtml");
+    if (ok) setStatus(`<span class="ok">Copied!</span> Paste into your email signature settings.`);
+    else setStatus(`<span class="warn">Copy may be blocked.</span> The HTML is selected—copy it manually.`);
+  });
+
+  $("btnCopyText").addEventListener("click", async () => {
+    const out = render(false);
+    if (!out) return;
+    const ok = await copyTextareaWithFallback($("plainOut"), "btnCopyText");
+    if (ok) setStatus(`<span class="ok">Copied!</span> Paste into any text-only signature field.`);
+    else setStatus(`<span class="warn">Copy may be blocked.</span> The text is selected—copy it manually.`);
+  });
+
+  $("btnCopyPreview").addEventListener("click", async () => {
+    const out = render(false);
+    if (!out) return;
+    const ok = await copyPreviewHtmlWithFallback("btnCopyPreview");
+    if (ok) setStatus(`<span class="ok">Copied!</span> Paste into your signature editor (or a rich-text field).`);
+    else setStatus(`<span class="warn">Copy may be blocked.</span> If needed, use Copy HTML or Copy Plain Text.`);
+  });
+
+  $("btnSave").addEventListener("click", () => {
+    const out = render(false);
+    if (!out) return;
+    const safeName = ($("fullName").value || "Signature").replace(/[\\/:*?"<>|]+/g, "").trim();
+    downloadFile(`Rowe Casa Organics - Signature - ${safeName}.html`, out.html);
+    setStatus(`<span class="ok">Saved!</span> File downloaded.`);
+  });
+
+  $("cell").addEventListener("blur", () => { $("cell").value = formatPhone($("cell").value); });
+  $("phone").addEventListener("blur", () => { $("phone").value = formatPhone($("phone").value); });
+  $("ext").addEventListener("blur", () => { $("ext").value = normalizeExt($("ext").value); });
+
+  // Help modal
+  const backdrop = $("helpBackdrop");
+  function openHelp(){ backdrop.style.display = "flex"; }
+  function closeHelp(){ backdrop.style.display = "none"; }
+  $("btnHelpTop").addEventListener("click", openHelp);
+  $("btnCloseHelp").addEventListener("click", closeHelp);
+  backdrop.addEventListener("click", (e) => { if (e.target === backdrop) closeHelp(); });
+  document.addEventListener("keydown", (e) => { if (e.key === "Escape") closeHelp(); });
+
+  // Initial state
+  $("previewArea").innerHTML = `<div class="hint">Click <b>Preview</b> to generate your signature.</div>`;
+  setStatus(`Enter your details, then click <b>Preview</b>.`);
+  lockActions(true);
+</script>
+</body>
+</html>
