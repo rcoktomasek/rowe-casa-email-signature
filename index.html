@@ -19,8 +19,8 @@
     --ok:#0a7a2f;
     --warn:#9a5a00;
 
-    --helpRed:#b00020;
-    --helpRedHover:#8f001a;
+    --brandRed:#b00020;
+    --brandRedHover:#8f001a;
 
     font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
   }
@@ -49,38 +49,56 @@
     gap:8px;
     padding:10px 12px;
     border-radius:12px;
-    border:1px solid var(--helpRed);
-    background:var(--helpRed);
+    border:1px solid var(--brandRed);
+    background:var(--brandRed);
     color:#fff;
     font-weight:900;
     cursor:pointer;
     white-space:nowrap;
     box-shadow:0 10px 20px rgba(176,0,32,.18);
-    text-decoration:none;
     transition: all 0.2s ease;
   }
-  .helpBtn:hover{ background:var(--helpRedHover); border-color:var(--helpRedHover); }
+  .helpBtn:hover{ background:var(--brandRedHover); border-color:var(--brandRedHover); }
   .helpBtn:active{ transform:translateY(1px); }
   .helpBtn .dot{
     width:8px; height:8px; border-radius:99px; background:#fff; opacity:.9;
     box-shadow:0 0 0 3px rgba(255,255,255,.18);
   }
 
-  .grid{ display:grid; grid-template-columns:380px 1fr; gap:14px; align-items:start; }
+  .adminTopBtn{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    padding:10px 12px;
+    border-radius:12px;
+    border:1px solid #bdb4ab;
+    background:#fbfaf8;
+    color:#1f2326;
+    font-weight:900;
+    cursor:pointer;
+    white-space:nowrap;
+  }
+  .adminTopBtn:hover{ background:#fff; }
+  .adminTopBtn:active{ transform:translateY(1px); }
+
+  .grid{ display:grid; grid-template-columns:420px 1fr; gap:14px; align-items:start; }
   @media (max-width:900px){ .grid{ grid-template-columns:1fr; } }
 
   .card{
     background:var(--card);
     border:1px solid var(--line);
-    border-radius:14px;
-    padding:14px;
+    border-radius:16px;
+    padding:16px;
     box-shadow:0 10px 24px rgba(0,0,0,.06);
   }
 
-  .sectionTitle{ display:flex; align-items:baseline; justify-content:space-between; gap:10px; flex-wrap:wrap; margin:0 0 8px; }
-  .sectionTitle h2{ margin:0; font-size:14px; letter-spacing:.2px; }
-  .sectionHelp{ margin:0; font-size:12px; color:#51565c; line-height:1.35; }
+  .sectionTitle{ display:flex; align-items:baseline; justify-content:space-between; gap:10px; flex-wrap:wrap; margin:0 0 10px; }
+  .sectionTitle h2{ margin:0; font-size:18px; letter-spacing:.2px; }
+  .sectionHelp{ margin:0; font-size:13px; color:#51565c; line-height:1.4; }
   .sectionHelp b{ color:#1f2326; }
+
+  .divider{ height:1px; background:var(--line); margin:14px 0; }
+  .hint{ margin-top:8px; font-size:12px; color:#51565c; line-height:1.35; }
 
   label{ display:block; font-size:12px; margin:10px 0 6px; color:#1f2326; }
   .req::after{ content:" *"; color:var(--danger); font-weight:900; }
@@ -101,9 +119,9 @@
 
   .phoneGroup { display:flex; gap:8px; align-items:stretch; }
   .phoneGroup input:first-child { flex:1; }
-  .phoneGroup input:last-child { width:110px; }
+  .phoneGroup input:last-child { width:120px; }
 
-  .btnRow{ display:flex; gap:8px; margin-top:14px; flex-wrap:wrap; }
+  .btnRow{ display:flex; gap:10px; margin-top:14px; flex-wrap:wrap; align-items:center; }
   button{
     padding:10px 14px;
     border-radius:12px;
@@ -119,28 +137,52 @@
   button:active{ transform:translateY(1px); }
 
   @keyframes flashSuccess {
-    0% { background-color: var(--ok); border-color: var(--ok); color: white; transform: scale(1.05); }
+    0% { background-color: var(--ok); border-color: var(--ok); color: white; transform: scale(1.03); }
     100% { transform: scale(1); }
   }
   button.copied { animation: flashSuccess 0.4s ease-out; }
-
-  .micro{
-    margin-top:10px;
-    padding:10px 11px;
-    border-radius:12px;
-    background:#fbfaf8;
-    border:1px solid var(--line);
-    font-size:12px;
-    color:#3b3f44;
-    line-height:1.35;
-  }
-  .micro b{ color:var(--ink); }
 
   .status{ margin-top:10px; font-size:12px; line-height:1.35; min-height:34px; }
   .status .ok{ color:var(--ok); font-weight:900; }
   .status .warn{ color:var(--warn); font-weight:900; }
   .status .err{ color:var(--danger); font-weight:900; }
 
+  .callout{
+    margin-top:12px;
+    padding:12px 14px;
+    border-radius:14px;
+    border:1px solid rgba(176,0,32,.25);
+    background:rgba(176,0,32,.05);
+    color:#1f2326;
+    font-size:13px;
+    line-height:1.35;
+  }
+  .callout b{ color:var(--danger); }
+
+  /* App selector (checkbox) */
+  .appGrid{
+    display:grid;
+    grid-template-columns:1fr;
+    gap:10px;
+    margin-top:10px;
+  }
+  .appOpt{
+    display:flex;
+    gap:10px;
+    align-items:flex-start;
+    padding:10px 12px;
+    border-radius:14px;
+    border:1px solid var(--line);
+    background:#fff;
+    cursor:pointer;
+    user-select:none;
+  }
+  .appOpt:hover{ background:#fbfaf8; }
+  .appOpt input{ width:auto; padding:0; margin-top:2px; }
+  .appOptTitle{ margin:0; font-weight:900; font-size:13px; color:#1f2326; }
+  .appOptDesc{ margin:3px 0 0; font-size:12px; color:#51565c; line-height:1.3; }
+
+  /* Signature preview */
   .previewWrap{
     padding:12px;
     border:1px dashed #bdb4ab;
@@ -149,25 +191,34 @@
     overflow-x:auto;
   }
 
-  textarea{
-    width:100%;
-    min-height:220px;
-    padding:10px;
-    border:1px solid #cfc9c2;
-    border-radius:12px;
-    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
-    font-size:12px;
-    box-sizing:border-box;
-    background:#fff;
-    outline:none;
-    white-space:pre;
+  /* Instructions cards */
+  .instGrid{
+    display:grid;
+    grid-template-columns:1fr;
+    gap:12px;
+    margin-top:12px;
   }
-  textarea.invalid{ border-color:var(--danger); background:var(--dangerSoft); }
+  .instCard{
+    border:1px solid var(--line);
+    border-radius:14px;
+    background:#fff;
+    padding:12px;
+  }
+  .instCard h3{ margin:0 0 6px; font-size:14px; letter-spacing:.2px; }
+  .instCard p{ margin:6px 0; font-size:13px; color:#2a2e32; line-height:1.4; }
+  .instCard ul{ margin:8px 0 0 18px; padding:0; }
+  .instCard li{ margin:6px 0; color:#1f2326; font-size:13px; line-height:1.35; }
 
-  .divider{ height:1px; background:var(--line); margin:12px 0; }
-  .hint{ margin-top:8px; font-size:12px; color:#51565c; line-height:1.35; }
+  /* Admin panel + accordions */
+  .adminNote{
+    margin:10px 0 0;
+    font-size:12px;
+    color:#51565c;
+    line-height:1.35;
+  }
+  .adminPanel{ display:none; margin-top:10px; }
+  .adminPanel.show{ display:block; }
 
-  /* Accordions */
   details{
     border:1px solid var(--line);
     background:#fbfaf8;
@@ -206,39 +257,19 @@
   }
   details[open] .caret{ transform: rotate(0deg); }
 
-  /* Admin gate */
-  .adminRow{
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    gap:10px;
-    flex-wrap:wrap;
-  }
-  .adminBtn{
-    display:inline-flex;
-    align-items:center;
-    gap:8px;
-    padding:9px 12px;
+  textarea{
+    width:100%;
+    min-height:220px;
+    padding:10px;
+    border:1px solid #cfc9c2;
     border-radius:12px;
-    border:1px solid #bdb4ab;
-    background:#fbfaf8;
-    color:#1f2326;
-    font-weight:900;
-    cursor:pointer;
-    white-space:nowrap;
-  }
-  .adminBtn:hover{ background:#fff; }
-  .adminNote{
-    margin:0;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
     font-size:12px;
-    color:#51565c;
-    line-height:1.35;
+    box-sizing:border-box;
+    background:#fff;
+    outline:none;
+    white-space:pre;
   }
-  .adminPanel{
-    display:none;
-    margin-top:10px;
-  }
-  .adminPanel.show{ display:block; }
 
   /* Help modal */
   .modalBackdrop{
@@ -252,7 +283,7 @@
     backdrop-filter: blur(2px);
   }
   .modal{
-    width:min(900px, 100%);
+    width:min(920px, 100%);
     background:#fff;
     border-radius:16px;
     border:1px solid var(--line);
@@ -260,64 +291,17 @@
     box-shadow:0 18px 60px rgba(0,0,0,.22);
   }
   .modal h2{ margin:0 0 10px; font-size:16px; }
-
-  /* Tabs */
-  .tabs{
-    display:flex;
-    gap:8px;
-    flex-wrap:wrap;
-    margin:0 0 10px;
-  }
-  .tabBtn{
-    padding:9px 12px;
-    border-radius:12px;
+  .helpBlock{
     border:1px solid var(--line);
     background:#fbfaf8;
-    font-weight:900;
-    cursor:pointer;
-    color:#1f2326;
-  }
-  .tabBtn.active{
-    border-color:rgba(176,0,32,.25);
-    background:rgba(176,0,32,.06);
-  }
-  .tabPanel{
-    display:none;
-    padding-top:4px;
-  }
-  .tabPanel.active{ display:block; }
-
-  .modal p{ margin:8px 0; color:#2a2e32; font-size:13px; line-height:1.4; }
-  .modal ol{ margin:10px 0 0 18px; padding:0; }
-  .modal li{ margin:6px 0; color:#1f2326; font-size:13px; line-height:1.35; }
-
-  .modal a.cta{
-    display:inline-block;
-    font-weight:900;
-    color:#fff;
-    background:var(--helpRed);
-    text-decoration:none;
-    padding:12px 14px;
-    border-radius:12px;
-    border:1px solid var(--helpRed);
-    box-shadow:0 10px 20px rgba(176,0,32,.18);
-  }
-  .modal a.cta:hover{ background:var(--helpRedHover); border-color:var(--helpRedHover); }
-
-  .callout{
-    margin-top:10px;
-    padding:10px 12px;
     border-radius:14px;
-    border:1px solid rgba(176,0,32,.25);
-    background:rgba(176,0,32,.05);
-    color:#1f2326;
-    font-size:13px;
-    line-height:1.35;
+    padding:12px;
+    margin-top:10px;
   }
-  .callout b{ color:var(--danger); }
-  .callout a{ color:var(--helpRed); font-weight:900; text-decoration:none; border-bottom:2px solid rgba(176,0,32,.25); }
-  .callout a:hover{ border-bottom-color: rgba(176,0,32,.6); }
-
+  .helpBlock h3{ margin:0 0 6px; font-size:13px; letter-spacing:.2px; }
+  .helpBlock p{ margin:6px 0; font-size:13px; line-height:1.4; color:#2a2e32; }
+  .helpBlock ul{ margin:8px 0 0 18px; padding:0; }
+  .helpBlock li{ margin:6px 0; color:#1f2326; font-size:13px; line-height:1.35; }
   .closeRow{
     display:flex;
     justify-content:space-between;
@@ -326,7 +310,6 @@
     align-items:center;
     flex-wrap:wrap;
   }
-
   .kbd{
     font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
     background:#f3f1ee;
@@ -344,11 +327,12 @@
       <img id="uiLogo" alt="Rowe Casa Organics" />
       <div>
         <h1>Rowe Casa Organics Email Signature Builder</h1>
-        <p class="sub">Fill out the form → Generate → Copy Signature → paste into your signature settings.</p>
+        <p class="sub">Step 1 → Step 2 → Step 3. Follow only the steps shown for your app.</p>
       </div>
     </div>
 
     <div class="headerActions">
+      <button class="adminTopBtn" id="btnAdminTop" type="button">Admin</button>
       <button class="helpBtn" id="btnHelpTop" type="button" aria-label="Help / How-To">
         <span class="dot"></span>
         Help / How-To
@@ -357,10 +341,43 @@
   </header>
 
   <div class="grid">
-    <!-- FORM -->
-    <div class="card">
-      <div class="sectionTitle"><h2>Your Details</h2></div>
-      <p class="sectionHelp">Required fields are marked with <b>*</b>. Copy/Save stays disabled until everything is valid.</p>
+    <!-- STEP 1 (Apps + Details combined) -->
+    <section class="card" id="step1">
+      <div class="sectionTitle"><h2>Step 1: Select your app(s) + enter details</h2></div>
+
+
+      <p class="sectionHelp" id="step1statusText">Pick your app, enter your details, then click <b>Build Signature</b>.</p>
+
+      <!-- CHECKBOX: multi-select -->
+      <div class="appGrid" role="group" aria-label="Choose your email apps">
+        <label class="appOpt">
+          <input type="checkbox" name="apps" id="app_gmail_web" value="gmail_web" />
+          <div>
+            <p class="appOptTitle">Gmail (Web)</p>
+            <p class="appOptDesc">Suitable for most people.</p>
+          </div>
+        </label>
+
+        <label class="appOpt">
+          <input type="checkbox" name="apps" id="app_outlook_desktop" value="outlook_desktop" />
+          <div>
+            <p class="appOptTitle">Outlook (Desktop)</p>
+            <p class="appOptDesc">Outlook on Windows or Mac.</p>
+          </div>
+        </label>
+
+        <label class="appOpt">
+          <input type="checkbox" name="apps" id="app_mobile_any" value="mobile_any" />
+          <div>
+            <p class="appOptTitle">Mobile Apps</p>
+            <p class="appOptDesc">Make sure you select your RCO account.</p>
+          </div>
+        </label>
+      </div>
+
+      <div class="divider"></div>
+
+      <p class="sectionHelp">Copy is enabled when everything is valid.</p>
 
       <label class="req" for="fullName">Full Name</label>
       <input id="fullName" placeholder="First Last" autocomplete="name" />
@@ -371,109 +388,94 @@
       <label class="req" for="email">Work Email</label>
       <input id="email" placeholder="first.last@rowecasaorganics.com" autocomplete="email" inputmode="email" />
 
-      <!-- Cell Phone: its own line -->
       <label for="cell">Cell Phone (optional)</label>
-      <input id="cell" placeholder="+1 (555) 555-5555 or (555) 555-5555" inputmode="tel" />
-      <div class="hint" style="margin-top:6px;">All in one field. Country codes are allowed (example: <b>+1</b>).</div>
+      <input id="cell" placeholder="555-555-5555" inputmode="tel" />
 
-      <!-- Office Phone + Ext: same line -->
       <label for="phone" style="margin-top:12px;">Office Phone (optional)</label>
       <div class="phoneGroup">
-        <input id="phone" placeholder="+1 (555) 555-5555 or (555) 555-5555" inputmode="tel" />
+        <input id="phone" placeholder="555-555-5555" inputmode="tel" />
         <input id="ext" placeholder="Ext (1–4)" inputmode="numeric" maxlength="4" />
       </div>
-      <div class="hint" style="margin-top:6px;">Extension: <b>Numbers only please.</b></div>
 
       <div class="btnRow">
         <button id="btnReset" type="button">Reset</button>
-        <button id="btnGenerate" class="primary" type="button">Generate</button>
+        <button id="btnGenerate" class="primary" type="button">Build Signature</button>
       </div>
 
       <div id="status" class="status"></div>
+    </section>
 
-      <div class="divider"></div>
-      <div class="hint">
-        If a Copy button is blocked: tap/click inside the box → Select All → Copy.
-        Desktop: <span class="kbd">Ctrl/Cmd+A</span> then <span class="kbd">Ctrl/Cmd+C</span>.
-      </div>
-    </div>
+    <!-- RIGHT SIDE: combined Step 2 + 3 -->
+    <div class="stack">
+      <section class="card" id="step2and3">
+        <div class="sectionTitle"><h2>Step 2: Copy + set your signature</h2></div>
+        <p class="sectionHelp">
+          <b>Copy and paste this</b> into your email app's signature area.
+        </p>
 
-    <!-- OUTPUT -->
-    <div class="card">
-      <!-- MAIN SIGNATURE -->
-      <div class="sectionTitle"><h2>Email Signature (Recommended)</h2></div>
-      <p class="sectionHelp">
-        <b>Use this for Gmail and most email apps.</b> Copy and paste into your email signature settings.
-        If the divider line doesn’t appear in a specific app (common in Outlook for Mac), that’s okay.
-      </p>
+        <div class="previewWrap" id="previewArea"></div>
 
-      <div class="previewWrap" id="previewArea"></div>
+        <div class="btnRow" style="margin-top:12px;">
+          <button id="btnCopySignature" class="primary" type="button" disabled>Copy Signature</button>
+        </div>
 
-      <div class="btnRow" style="margin-top:10px;">
-        <button id="btnCopySignature" type="button" disabled>Copy Signature</button>
-      </div>
-
-      <!-- IMPORTANT NOTE (moved here, under recommended area) -->
-      <div class="micro">
-        <b>Important:</b> Delete your old signature(s) and paste this new signature into <b>every email app and computer / phone you use</b>.
-        If you use Gmail + Outlook + a mobile app, you should check and test each one (on each device).
-        To reset quickly, you can also refresh this page.
-      </div>
-
-      <div class="divider"></div>
-
-      <!-- ADMIN GATE -->
-      <div class="adminRow">
-        <button id="btnAdmin" class="adminBtn" type="button">Admin</button>
-        <p class="adminNote">Admin options are for special use-cases only (last resort). Most users should only use <b>Copy Signature</b>.</p>
-      </div>
-
-      <div id="adminPanel" class="adminPanel">
-        <!-- PLAIN TEXT (ACCORDION) -->
-        <details id="plainTextDetails">
-          <summary>
-            <span>Plain Text (Last resort)</span>
-            <span class="caret" aria-hidden="true">^</span>
-          </summary>
-          <div class="accBody">
-            <p class="sectionHelp" style="margin-top:0;">
-              Use only if an app does not allow formatting/images (text-only fields).
-            </p>
-
-            <textarea id="plainOut" spellcheck="false" placeholder="Click Generate first to create plain text."></textarea>
-
-            <div class="btnRow" style="margin-top:10px;">
-              <button id="btnCopyText" type="button" disabled>Copy Plain Text</button>
-            </div>
-          </div>
-        </details>
+        <div class="callout">
+          <b>Important:</b> Do this once for <b>every app / phone you use and test</b>.
+        </div>
 
         <div class="divider"></div>
 
-        <!-- HTML (ACCORDION) -->
-        <details id="htmlDetails">
-          <summary>
-            <span>HTML (Last resort / IT only)</span>
-            <span class="caret" aria-hidden="true">^</span>
-          </summary>
-          <div class="accBody">
-            <p class="sectionHelp" style="margin-top:0;">
-              Advanced fallback. Some clients may show code instead of formatting. Use only when instructed by IT.
-            </p>
+        <div class="sectionTitle" style="margin-top:0;"><h2>Step 3: Follow the steps for your app(s)</h2></div>
+        <p class="sectionHelp"><b>NOTE: Please delete all old signature(s) before proceeding.</b></p>
 
-            <textarea id="htmlOut" spellcheck="false" placeholder="Click Generate first to create HTML."></textarea>
+        <div class="instGrid" id="instWrap"></div>
 
-            <div class="btnRow" style="margin-top:10px;">
-              <button id="btnCopyHtml" type="button" disabled>Copy HTML</button>
-              <button id="btnSave" type="button" disabled>Save to File</button>
+        <div class="divider"></div>
+
+        <div class="callout">
+          <b>Need help?</b> Email IT at:
+          <a href="mailto:itsupport@rowecasaorganics.com" style="color:var(--brandRed); font-weight:900; text-decoration:none;">itsupport@rowecasaorganics.com</a>.
+          Please be sure to include details and screenshots of your signature settings.
+        </div>
+
+        <div class="adminPanel" id="adminPanel">
+          <p class="adminNote">Admin options are for special use-cases only (last resort). Most users should only use <b>Copy Signature</b>.</p>
+
+          <div class="divider"></div>
+
+          <details id="plainTextDetails">
+            <summary>
+              <span>Plain Text (Last resort)</span>
+              <span class="caret" aria-hidden="true">^</span>
+            </summary>
+            <div class="accBody">
+              <p class="sectionHelp" style="margin-top:0;">Use only if an app does not allow formatting/images (text-only fields).</p>
+              <textarea id="plainOut" spellcheck="false" placeholder="Click Build Signature first to create plain text."></textarea>
+              <div class="btnRow" style="margin-top:10px;">
+                <button id="btnCopyText" type="button" disabled>Copy Plain Text</button>
+              </div>
             </div>
+          </details>
 
-            <div class="hint">
-              Plain-text soft-fail: if a recipient only allows plain text, their client will convert HTML to text.
+          <div class="divider"></div>
+
+          <details id="htmlDetails">
+            <summary>
+              <span>HTML (Last resort / IT only)</span>
+              <span class="caret" aria-hidden="true">^</span>
+            </summary>
+            <div class="accBody">
+              <p class="sectionHelp" style="margin-top:0;">Advanced fallback. Use only when instructed by IT.</p>
+              <textarea id="htmlOut" spellcheck="false" placeholder="Click Build Signature first to create HTML."></textarea>
+              <div class="btnRow" style="margin-top:10px;">
+                <button id="btnCopyHtml" type="button" disabled>Copy HTML</button>
+                <button id="btnSave" type="button" disabled>Save to File</button>
+              </div>
             </div>
-          </div>
-        </details>
-      </div>
+          </details>
+        </div>
+
+      </section>
     </div>
   </div>
 </div>
@@ -481,86 +483,31 @@
 <!-- HELP MODAL -->
 <div class="modalBackdrop" id="helpBackdrop" role="dialog" aria-modal="true" aria-labelledby="helpTitle">
   <div class="modal">
-    <h2 id="helpTitle">Help – Set up your Rowe Casa Organics email signature</h2>
+    <h2 id="helpTitle">Help – Rowe Casa Organics Email Signature</h2>
 
-    <p>
-      <a class="cta" id="loomLink" href="#" target="_blank" rel="noopener noreferrer">
-        ▶ Watch the How-To Video
-      </a>
-    </p>
-
-    <div class="callout">
-      <b>Important:</b> Do this once for <b>every email app and computer / phone you use</b>.
-      If you use Gmail + Outlook + a mobile app, you should check and test each one (on each device).
-    </div>
-
-    <div class="tabs" role="tablist" aria-label="Help tabs">
-      <button class="tabBtn active" type="button" data-tab="tabStart" role="tab" aria-selected="true">Start Here</button>
-      <button class="tabBtn" type="button" data-tab="tabDelete" role="tab" aria-selected="false">Delete Old Signatures</button>
-      <button class="tabBtn" type="button" data-tab="tabAdd" role="tab" aria-selected="false">Add New Signature</button>
-      <button class="tabBtn" type="button" data-tab="tabApps" role="tab" aria-selected="false">App Settings</button>
-      <button class="tabBtn" type="button" data-tab="tabNeed" role="tab" aria-selected="false">Need Help</button>
-    </div>
-
-    <!-- TAB: Start -->
-    <div id="tabStart" class="tabPanel active" role="tabpanel">
-      <ol>
-        <li>Delete your old signature(s) everywhere you use email (computer + phone).</li>
-        <li>Fill in <b>Full Name</b>, <b>Job Title</b>, and <b>Work Email</b> (must end with <b>@rowecasaorganics.com</b>).</li>
-        <li>Click <b>Generate</b>.</li>
-        <li>Click <b>Copy Signature</b> and paste into your email signature settings.</li>
-        <li>Send yourself a quick test email to confirm it looks right.</li>
-      </ol>
-      <p class="sectionHelp"><b>Tip:</b> If you use multiple apps (Gmail + Outlook + mobile), repeat this in each app on each device.</p>
-    </div>
-
-    <!-- TAB: Delete -->
-    <div id="tabDelete" class="tabPanel" role="tabpanel">
-      <p class="sectionHelp"><b>Delete your old signature(s) first</b> so the new one doesn’t stack with the old one.</p>
-      <ol>
-        <li><b>Gmail (Web):</b> Settings ⚙️ → See all settings → Signature → remove old signature(s) → Save Changes.</li>
-        <li><b>Outlook (Desktop):</b> Settings/Preferences → Signatures → remove old signature(s).</li>
-        <li><b>Mobile apps:</b> App Settings → Signature → remove old signature.</li>
-      </ol>
-    </div>
-
-    <!-- TAB: Add -->
-    <div id="tabAdd" class="tabPanel" role="tabpanel">
-      <p class="sectionHelp"><b>Use the “Email Signature (Recommended)” section on this page.</b></p>
-      <ol>
-        <li>Click <b>Generate</b>.</li>
-        <li>Click <b>Copy Signature</b>.</li>
-        <li>Paste into your email app’s signature settings.</li>
-      </ol>
-      <p class="sectionHelp">Admin options are for special use-cases only (last resort). Most users should not use them.</p>
-    </div>
-
-    <!-- TAB: Apps -->
-    <div id="tabApps" class="tabPanel" role="tabpanel">
-      <p class="sectionHelp"><b>Be sure you are editing the correct Rowe Casa Organics account</b> in each app.</p>
-      <ol>
-        <li><b>Gmail (Web):</b> Set signature defaults for <b>New emails</b> and <b>Replies/Forwards</b>. Save Changes.</li>
-        <li><b>Gmail Mobile App:</b> Select your Rowe Casa Organics account → turn <b>Mobile Signature</b> OFF (so it uses your web signature).</li>
-        <li><b>Outlook (Mac):</b> Set default signature for <b>New messages</b> and <b>Replies/Forwards</b>.</li>
-        <li><b>Outlook (Windows):</b> File → Options → Mail → Signatures → assign for <b>New messages</b> and <b>Replies/Forwards</b>.</li>
-      </ol>
-    </div>
-
-    <!-- TAB: Need Help -->
-    <div id="tabNeed" class="tabPanel" role="tabpanel">
-      <p class="sectionHelp">
-        If you have any issues, contact IT and include <b>screenshots of your app settings and signature</b>.
+    <div class="helpBlock">
+      <h3>Section 1: The simple rule</h3>
+      <p>
+        You are setting up the same Rowe Casa Organics signature in every email app you use.
+        If you use Gmail + Outlook + a mobile app, you should check and test each one (on each device).
       </p>
-      <div class="callout">
-        <b>Contact IT:</b>
-        <a href="mailto:itsupport@rowecasaorganics.com">itsupport@rowecasaorganics.com</a>
-      </div>
-      <p class="sectionHelp" style="margin-top:10px;">
-        Please include:
-        <br>• Which app (Gmail / Outlook / Mobile)
-        <br>• Which device (Windows / Mac / iPhone / Android)
-        <br>• A screenshot of your signature settings page
-        <br>• A screenshot of the signature after you paste it
+    </div>
+
+    <div class="helpBlock">
+      <h3>Section 2: What to do on this page</h3>
+      <ul>
+        <li>Select the app(s) you use in <b>Step 1</b>, and enter your details.</li>
+        <li>Click <b>Build Signature</b>.</li>
+        <li>Click <b>Copy Signature</b>, paste into your email signature settings, and test.</li>
+        <li>Follow the instructions shown for each app you selected.</li>
+      </ul>
+    </div>
+
+    <div class="helpBlock">
+      <h3>Section 3: Need help?</h3>
+      <p>
+        Email IT at <a href="mailto:itsupport@rowecasaorganics.com">itsupport@rowecasaorganics.com</a>.
+        Please include the app, device, and screenshots of your signature settings + what you pasted.
       </p>
     </div>
 
@@ -572,54 +519,22 @@
 </div>
 
 <script>
-  // ============================================================
-  // QUICK CONFIG (Replace LOOM_VIDEO_URL when ready)
-  // ============================================================
-  const LOOM_VIDEO_URL = "https://www.loom.com/share/REPLACE_ME";
-
-  // ============================================================
-  // BRAND / TEMPLATE CONSTANTS
-  // ============================================================
   const BRAND = Object.freeze({
-    version: "2025.1",
+    version: "2025.4",
     approvedDomain: "rowecasaorganics.com",
-
     logoUrl: "https://www.rowecasaorganics.com/cdn/shop/files/Checkout_Logo.png",
     websiteText: "rowecasaorganics.com",
     websiteUrl: "https://rowecasaorganics.com",
-
-    // Signature layout
-    // (original 120px; 80% = 96px)
     logoWidthPx: 96,
     leftColPadRightPx: 14,
-    dividerPx: 1,                 // reduced thickness (half of 2px)
+    dividerPx: 1,
     dividerColor: "#000000",
     rightColPadLeftPx: 14,
-
     linkColor: "#1155cc"
   });
 
   const $ = (id) => document.getElementById(id);
-
   $("uiLogo").src = BRAND.logoUrl;
-
-  function isPlaceholderVideoUrl(url){
-    return !url || url.includes("REPLACE_ME");
-  }
-
-  function setVideoLinks(){
-    $("loomLink").href = LOOM_VIDEO_URL;
-
-    const placeholder = isPlaceholderVideoUrl(LOOM_VIDEO_URL);
-    if (placeholder){
-      const warn = (e) => {
-        e.preventDefault();
-        alert("How-To Video is not available yet. IT will add this link soon.");
-      };
-      $("loomLink").addEventListener("click", warn);
-    }
-  }
-  setVideoLinks();
 
   function enc(s){
     return String(s ?? "")
@@ -637,13 +552,7 @@
     const s = v.trim().toLowerCase();
     return s.endsWith("@" + BRAND.approvedDomain);
   }
-
-  // -----------------------
-  // PHONE FORMATTING
-  // -----------------------
-  function containsLetters(s){
-    return /[A-Za-z]/.test(s || "");
-  }
+  function containsLetters(s){ return /[A-Za-z]/.test(s || ""); }
 
   function groupDigits(digits, groups){
     let out = [];
@@ -683,11 +592,9 @@
     if (digits.length === 7){
       return `${digits.slice(0,3)}-${digits.slice(3)}`;
     }
-
     return groupDigits(digits, [3,3,4,4]);
   }
 
-  // Extension: digits only, 1-4 digits if provided
   function normalizeExt(raw){
     const s = (raw || "").trim();
     if (!s) return "";
@@ -700,8 +607,13 @@
     return /^\d{1,4}$/.test(s);
   }
 
+  function getSelectedApps(){
+    return Array.from(document.querySelectorAll('input[name="apps"]:checked')).map(x => x.value);
+  }
+
   function getData(){
     return {
+      apps: getSelectedApps(),
       fullName: $("fullName").value.trim(),
       jobTitle: $("jobTitle").value.trim(),
       email: $("email").value.trim(),
@@ -713,6 +625,10 @@
 
   function validate(d){
     const issues = [];
+
+    if (!d.apps.length){
+      issues.push({ field:"apps", msg:"Select at least one email app." });
+    }
 
     if (!d.fullName) issues.push({ field:"fullName", msg:"Full Name is required." });
     if (!d.jobTitle) issues.push({ field:"jobTitle", msg:"Job Title is required." });
@@ -743,44 +659,25 @@
 
   function clearValidationUI(){
     ["fullName","jobTitle","email","cell","phone","ext"].forEach(id => $(id).classList.remove("invalid"));
-    if ($("htmlOut")) $("htmlOut").classList.remove("invalid");
-    if ($("plainOut")) $("plainOut").classList.remove("invalid");
   }
-
   function applyValidationUI(issues){
     clearValidationUI();
     const marked = new Set();
     for (const it of issues){
-      if (it.field && !marked.has(it.field)){
+      if (it.field && $(it.field) && !marked.has(it.field)){
         $(it.field).classList.add("invalid");
         marked.add(it.field);
       }
     }
-    if ($("htmlOut")) $("htmlOut").classList.add("invalid");
-    if ($("plainOut")) $("plainOut").classList.add("invalid");
   }
 
   function setStatus(html){ $("status").innerHTML = html; }
 
-  function lockActions(locked){
-    $("btnCopySignature").disabled = locked;
-    if ($("btnCopyHtml")) $("btnCopyHtml").disabled = locked;
-    if ($("btnCopyText")) $("btnCopyText").disabled = locked;
-    if ($("btnSave")) $("btnSave").disabled = locked;
-  }
-
-  // ------------------------------------------------------------
-  // SIGNATURE HTML (divider via dedicated TD)
-  // - Adds C: / O: labels conditionally
-  // ------------------------------------------------------------
   function buildSignatureHtml(d){
     const cell = formatPhone(d.cellRaw);
     let office = formatPhone(d.officeRaw);
-
     const ext = normalizeExt(d.extRaw);
-    if (office && ext){
-      office += ` x ${ext}`;
-    }
+    if (office && ext) office += ` x ${ext}`;
 
     const phoneLines = [];
     if (cell)   phoneLines.push(`<div>C: ${enc(cell)}</div>`);
@@ -835,71 +732,18 @@
     const cell = formatPhone(d.cellRaw);
     let office = formatPhone(d.officeRaw);
     const ext = normalizeExt(d.extRaw);
-    if (office && ext){
-      office += ` x ${ext}`;
-    }
-
-    const left = "ROWE CASA ORGANICS";
-    const sep = " | ";
-    const leftWidth = left.length;
-    const padLeft = (s) => String(s ?? "").padStart(leftWidth, " ");
+    if (office && ext) office += ` x ${ext}`;
 
     const lines = [];
     lines.push("--");
     lines.push("");
-    lines.push(left + sep + d.fullName);
-    lines.push(padLeft("") + sep + d.jobTitle);
-    lines.push(padLeft("") + sep + d.email);
-    if (cell)   lines.push(padLeft("") + sep + `C: ${cell}`);
-    if (office) lines.push(padLeft("") + sep + `O: ${office}`);
-    lines.push(padLeft("") + sep + BRAND.websiteText);
-
+    lines.push(`ROWE CASA ORGANICS | ${d.fullName}`);
+    lines.push(`                 | ${d.jobTitle}`);
+    lines.push(`                 | ${d.email}`);
+    if (cell)   lines.push(`                 | C: ${cell}`);
+    if (office) lines.push(`                 | O: ${office}`);
+    lines.push(`                 | ${BRAND.websiteText}`);
     return lines.join("\n");
-  }
-
-  function render(showStatus=true){
-    $("ext").value = normalizeExt($("ext").value);
-
-    const d = getData();
-    const issues = validate(d);
-
-    if (issues.length){
-      applyValidationUI(issues);
-      lockActions(true);
-      $("previewArea").innerHTML = `<div class="hint"><span class="warn">Enter required fields to generate the signature.</span></div>`;
-      if ($("htmlOut")) $("htmlOut").value = "";
-      if ($("plainOut")) $("plainOut").value = "";
-      if (showStatus){
-        setStatus(`<span class="err">Fix these items:</span><br>• ${issues.map(x=>x.msg).join("<br>• ")}`);
-      }
-      return null;
-    }
-
-    clearValidationUI();
-    const html = buildSignatureHtml(d);
-    const txt = buildPlainText(d);
-
-    $("previewArea").innerHTML = html;
-    if ($("htmlOut")) $("htmlOut").value = html;
-    if ($("plainOut")) $("plainOut").value = txt;
-
-    lockActions(false);
-    if (showStatus){
-      setStatus(`<span class="ok">Ready.</span> Click <b>Copy Signature</b> and paste into your signature settings.`);
-    }
-    return { html, txt };
-  }
-
-  function flashBtn(btnId){
-    const btn = $(btnId);
-    if(!btn) return;
-    btn.classList.add("copied");
-    const orig = btn.innerText;
-    btn.innerText = "Copied!";
-    setTimeout(() => {
-      btn.classList.remove("copied");
-      btn.innerText = orig;
-    }, 1200);
   }
 
   function stripToText(html){
@@ -912,10 +756,19 @@
     return tmp.textContent.replace(/\n{3,}/g, "\n\n").trim();
   }
 
-  async function copySignatureWithFallback(btnId){
-    const html = $("previewArea").innerHTML;
+  function flashBtn(btnId){
+    const btn = $(btnId);
+    if(!btn) return;
+    btn.classList.add("copied");
+    const orig = btn.innerText;
+    btn.innerText = "Copied!";
+    setTimeout(() => {
+      btn.classList.remove("copied");
+      btn.innerText = orig;
+    }, 1100);
+  }
 
-    // Preferred: write rich HTML + plain text
+  async function copySignatureHtml(html, btnId){
     try{
       if (window.ClipboardItem && navigator.clipboard?.write){
         const htmlBlob = new Blob([html], { type: "text/html" });
@@ -924,16 +777,15 @@
         flashBtn(btnId);
         return true;
       }
-    } catch(_) { /* fallthrough */ }
+    } catch(_) {}
 
-    // Fallback: plain text copy
     try{
       if (navigator.clipboard?.writeText){
         await navigator.clipboard.writeText(stripToText(html));
         flashBtn(btnId);
         return true;
       }
-    } catch(_) { /* fallthrough */ }
+    } catch(_) {}
 
     return false;
   }
@@ -945,7 +797,7 @@
         flashBtn(btnId);
         return true;
       }
-    } catch(_) { /* fallthrough */ }
+    } catch(_) {}
 
     textareaEl.focus();
     textareaEl.select();
@@ -964,27 +816,154 @@
     setTimeout(() => URL.revokeObjectURL(a.href), 500);
   }
 
-  function resetForm(){
-    $("fullName").value = "";
-    $("jobTitle").value = "";
-    $("email").value = "";
-    $("cell").value = "";
-    $("phone").value = "";
-    $("ext").value = "";
+  function ensureInstIntro(){
+    const wrap = $("instWrap");
+    if (!wrap.innerHTML.trim()){
+      wrap.innerHTML = `
+        <div class="instCard">
+          <h3>Select your app(s) in Step 1</h3>
+          <p>Then we’ll show only the instructions you need here.</p>
+        </div>
+      `;
+    }
+  }
+
+  function cardGmailWeb(){
+    return `
+      <div class="instCard" data-app="gmail_web">
+        <h3>Gmail (Web)</h3>
+        <p>Paste the signature into Gmail in your browser.</p>
+        <ul>
+          <li>Open Gmail on your computer.</li>
+          <li>Settings ⚙️ → <b>See all settings</b> → <b>Signature</b>.</li>
+          <li>Create/select your signature, then paste using <b>Copy Signature</b>.</li>
+          <li>Set defaults for <b>New emails</b> and <b>Replies/forwards</b> (if available).</li>
+          <li>Scroll down and click <b>Save Changes</b>.</li>
+          <li>Send yourself a test email to confirm.</li>
+        </ul>
+      </div>
+    `;
+  }
+
+  function cardOutlookDesktop(){
+    return `
+      <div class="instCard" data-app="outlook_desktop">
+        <h3>Outlook (Desktop)</h3>
+        <p>Paste the signature into Outlook. Divider line may not show in Outlook for Mac — that’s okay.</p>
+        <ul>
+          <li><b>Recommended:</b> open a <b>New Email</b> window.</li>
+          <li>Choose <b>Signature</b> from the ribbon/menu (location varies).</li>
+          <li>Paste using <b>Copy Signature</b>.</li>
+          <li>Set it as default for <b>New messages</b> and <b>Replies/forwards</b> (if available).</li>
+          <li>Send yourself a test email to confirm.</li>
+        </ul>
+      </div>
+    `;
+  }
+
+  function cardMobileAny(){
+    return `
+      <div class="instCard" data-app="mobile_any">
+        <h3>Mobile Apps (Gmail or Outlook)</h3>
+        <p>Mobile apps vary. Make sure you’re editing your Rowe Casa Organics account settings.</p>
+        <ul>
+          <li>Open your mail app and confirm you’re on your <b>Rowe Casa Organics</b> account.</li>
+          <li>Find Signature settings (usually under Settings).</li>
+          <li>Paste the signature.</li>
+          <li><b>If it won’t paste nicely:</b> email yourself a test message from your computer (with the signature), then copy it on your phone and paste it into the app settings.</li>
+          <li>Send yourself a test email to confirm.</li>
+        </ul>
+      </div>
+    `;
+  }
+
+  function renderInstructions(apps){
+    const wrap = $("instWrap");
+    if (!apps.length){
+      wrap.innerHTML = `
+        <div class="instCard">
+          <h3>Select your app(s) in Step 1</h3>
+          <p>Then we’ll show only the instructions you need here.</p>
+        </div>
+      `;
+      return;
+    }
+
+    const cards = [];
+    if (apps.includes("gmail_web")) cards.push(cardGmailWeb());
+    if (apps.includes("outlook_desktop")) cards.push(cardOutlookDesktop());
+    if (apps.includes("mobile_any")) cards.push(cardMobileAny());
+
+    wrap.innerHTML = cards.join("");
+  }
+
+  function render(showStatus=true){
+    $("ext").value = normalizeExt($("ext").value);
+
+    const d = getData();
+    renderInstructions(d.apps);
+
+    const issues = validate(d);
+
+    if (issues.length){
+      applyValidationUI(issues);
+      $("previewArea").innerHTML = `<div class="hint"><span style="color:var(--warn); font-weight:900;">Click Build Signature to create your signature.</span></div>`;
+      $("btnCopySignature").disabled = true;
+
+      if ($("btnCopyText")) $("btnCopyText").disabled = true;
+      if ($("btnCopyHtml")) $("btnCopyHtml").disabled = true;
+      if ($("btnSave")) $("btnSave").disabled = true;
+
+      if ($("htmlOut")) $("htmlOut").value = "";
+      if ($("plainOut")) $("plainOut").value = "";
+
+      if (showStatus){
+        setStatus(`<span class="err">Fix these items:</span><br>• ${issues.map(x=>x.msg).join("<br>• ")}`);
+      }
+      return null;
+    }
+
     clearValidationUI();
-    $("previewArea").innerHTML = `<div class="hint">Click <b>Generate</b> to create your signature.</div>`;
+
+    const html = buildSignatureHtml(d);
+    const txt  = buildPlainText(d);
+
+    $("previewArea").innerHTML = html;
+    $("btnCopySignature").disabled = false;
+
+    if ($("htmlOut")) $("htmlOut").value = html;
+    if ($("plainOut")) $("plainOut").value = txt;
+
+    if ($("btnCopyText")) $("btnCopyText").disabled = false;
+    if ($("btnCopyHtml")) $("btnCopyHtml").disabled = false;
+    if ($("btnSave")) $("btnSave").disabled = false;
+
+    if (showStatus){
+      setStatus(`<span class="ok">Built.</span> Click <b>Copy Signature</b> then follow the steps below for your selected app(s).`);
+    }
+    return { html, txt };
+  }
+
+  function resetAll(){
+    document.querySelectorAll('input[name="apps"]').forEach(r => r.checked = false);
+    ["fullName","jobTitle","email","cell","phone","ext"].forEach(id => $(id).value = "");
+    clearValidationUI();
+
+    $("previewArea").innerHTML = `<div class="hint">Click <b>Build Signature</b> to create your signature.</div>`;
+    $("btnCopySignature").disabled = true;
+
     if ($("htmlOut")) $("htmlOut").value = "";
     if ($("plainOut")) $("plainOut").value = "";
-    setStatus(`Enter your details, then click <b>Generate</b>.`);
-    lockActions(true);
-    try{ $("plainTextDetails").open = false; } catch(_) {}
-    try{ $("htmlDetails").open = false; } catch(_) {}
+
+    if ($("btnCopyText")) $("btnCopyText").disabled = true;
+    if ($("btnCopyHtml")) $("btnCopyHtml").disabled = true;
+    if ($("btnSave")) $("btnSave").disabled = true;
+
+    renderInstructions([]);
+    setStatus(`Choose your app, enter your details, then click <b>Build Signature</b>.`);
     window.scrollTo({ top: 0, behavior: "smooth" });
   }
 
-  // -----------------------
-  // ADMIN GATE (password: "password")
-  // -----------------------
   function openAdmin(){
     const pwd = prompt("Admin password:");
     if (pwd === null) return;
@@ -996,52 +975,37 @@
     }
   }
 
-  // -----------------------
-  // Help tabs
-  // -----------------------
-  function setActiveTab(tabId){
-    document.querySelectorAll(".tabBtn").forEach(btn => {
-      const active = btn.dataset.tab === tabId;
-      btn.classList.toggle("active", active);
-      btn.setAttribute("aria-selected", active ? "true" : "false");
-    });
-    document.querySelectorAll(".tabPanel").forEach(p => {
-      p.classList.toggle("active", p.id === tabId);
-    });
-  }
-
   // Events
-  $("btnReset").addEventListener("click", resetForm);
+  document.querySelectorAll('input[name="apps"]').forEach(r =>
+    r.addEventListener("change", () => renderInstructions(getSelectedApps()))
+  );
+
+  $("btnReset").addEventListener("click", resetAll);
   $("btnGenerate").addEventListener("click", () => render(true));
 
   $("btnCopySignature").addEventListener("click", async () => {
     const out = render(false);
     if (!out) return;
-    const ok = await copySignatureWithFallback("btnCopySignature");
-    if (ok) setStatus(`<span class="ok">Copied!</span> Paste into your email signature settings.`);
-    else setStatus(`<span class="warn">Copy may be blocked.</span> Try selecting the signature area and copying manually, or contact IT.`);
+    const ok = await copySignatureHtml(out.html, "btnCopySignature");
+    setStatus(ok ? `<span class="ok">Copied!</span> Paste into your email signature settings (then test).`
+                 : `<span class="warn">Copy may be blocked.</span> Contact IT at itsupport@rowecasaorganics.com with screenshots.`);
   });
 
-  $("btnAdmin").addEventListener("click", openAdmin);
+  $("btnAdminTop").addEventListener("click", openAdmin);
 
-  // Admin copy/save handlers (only if panel exists)
   document.addEventListener("click", async (e) => {
     if (e.target && e.target.id === "btnCopyText"){
       const out = render(false);
       if (!out) return;
       const ok = await copyTextareaWithFeedback($("plainOut"), "btnCopyText");
-      if (ok) setStatus(`<span class="ok">Copied!</span> (Plain Text)`);
-      else setStatus(`<span class="warn">Copy may be blocked.</span> The text is selected—copy it manually.`);
+      setStatus(ok ? `<span class="ok">Copied!</span> (Plain Text)` : `<span class="warn">Copy may be blocked.</span> The text is selected—copy it manually.`);
     }
-
     if (e.target && e.target.id === "btnCopyHtml"){
       const out = render(false);
       if (!out) return;
       const ok = await copyTextareaWithFeedback($("htmlOut"), "btnCopyHtml");
-      if (ok) setStatus(`<span class="ok">Copied!</span> (HTML)`);
-      else setStatus(`<span class="warn">Copy may be blocked.</span> The HTML is selected—copy it manually.`);
+      setStatus(ok ? `<span class="ok">Copied!</span> (HTML)` : `<span class="warn">Copy may be blocked.</span> The HTML is selected—copy it manually.`);
     }
-
     if (e.target && e.target.id === "btnSave"){
       const out = render(false);
       if (!out) return;
@@ -1051,29 +1015,23 @@
     }
   });
 
-  // Format on blur
   $("cell").addEventListener("blur", () => { $("cell").value = formatPhone($("cell").value); });
   $("phone").addEventListener("blur", () => { $("phone").value = formatPhone($("phone").value); });
   $("ext").addEventListener("blur", () => { $("ext").value = normalizeExt($("ext").value); });
 
-  // Help modal open/close + tabs
+  // Help modal
   const backdrop = $("helpBackdrop");
-  function openHelp(){ backdrop.style.display = "flex"; setActiveTab("tabStart"); }
+  function openHelp(){ backdrop.style.display = "flex"; }
   function closeHelp(){ backdrop.style.display = "none"; }
-
   $("btnHelpTop").addEventListener("click", openHelp);
   $("btnCloseHelp").addEventListener("click", closeHelp);
   backdrop.addEventListener("click", (e) => { if (e.target === backdrop) closeHelp(); });
   document.addEventListener("keydown", (e) => { if (e.key === "Escape") closeHelp(); });
 
-  document.querySelectorAll(".tabBtn").forEach(btn => {
-    btn.addEventListener("click", () => setActiveTab(btn.dataset.tab));
-  });
-
-  // Initial state
-  $("previewArea").innerHTML = `<div class="hint">Click <b>Generate</b> to create your signature.</div>`;
-  setStatus(`Enter your details, then click <b>Generate</b>.`);
-  lockActions(true);
+  // Init
+  $("previewArea").innerHTML = `<div class="hint">Click <b>Build Signature</b> to create your signature.</div>`;
+  renderInstructions([]);
+  setStatus(`Choose your app, enter your details, then click <b>Build Signature</b>.`);
 </script>
 </body>
 </html>
