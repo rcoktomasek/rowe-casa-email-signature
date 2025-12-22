@@ -28,7 +28,7 @@
     --radius:16px;
 
     font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-    font-size: 17px;
+    font-size: 17px; /* +1-2pts overall readability */
   }
 
   *{ box-sizing:border-box; }
@@ -171,6 +171,7 @@
   .callout a{ color:var(--brandRed); font-weight:900; text-decoration:none; border-bottom:2px solid rgba(176,0,32,.25); }
   .callout a:hover{ border-bottom-color: rgba(176,0,32,.6); }
 
+  /* App selector (checkbox cards) */
   .appGrid{
     display:grid;
     grid-template-columns:1fr;
@@ -208,6 +209,7 @@
   }
   .rowBetween{ display:flex; align-items:center; justify-content:space-between; gap:10px; }
 
+  /* Signature preview */
   .previewWrap{
     padding:12px;
     border:2px dashed #bdb4ab;
@@ -217,6 +219,7 @@
     min-height:74px;
   }
 
+  /* Instructions cards */
   .instGrid{
     display:grid;
     grid-template-columns:1fr;
@@ -253,6 +256,7 @@
   .instCard ul{ margin:10px 0 0 18px; padding:0; }
   .instCard li{ margin:8px 0; color:#1f2326; font-size:14px; line-height:1.35; }
 
+  /* Screenshot accordion (within instruction cards) */
   details.ss{
     margin-top:12px;
     border:2px solid rgba(214,209,195,.9);
@@ -323,7 +327,7 @@
   .thumb img{
     width:100%;
     height:auto;
-    max-height:260px;
+    max-height:260px; /* bigger + readable */
     object-fit:contain;
     display:block;
     border-radius:12px;
@@ -351,6 +355,7 @@
     line-height:1.35;
   }
 
+  /* Admin panel (hidden) */
   .adminPanel{ display:none; margin-top:12px; }
   .adminPanel.show{ display:block; }
 
@@ -387,6 +392,7 @@
     white-space:pre;
   }
 
+  /* Help modal */
   .modalBackdrop{
     position:fixed; inset:0;
     background:rgba(37,40,42,.55);
@@ -478,6 +484,7 @@
     flex-wrap:wrap;
   }
 
+  /* Image viewer modal */
   .imgModal{
     width:min(1100px, 100%);
     max-height: 92vh;
@@ -514,6 +521,7 @@
     background:#f3f1ee;
   }
 
+  /* Small “easter egg” badge inside admin */
   #eggBadge{
     display:inline-flex;
     align-items:center;
@@ -553,6 +561,7 @@
   </header>
 
   <div class="grid">
+    <!-- STEP 1 -->
     <section class="card" id="step1">
       <div class="sectionTitle"><h2>Step 1. Setup your Signature</h2></div>
       <p class="sectionHelp">Choose where you use work email, enter your details, then click <b>Build Signature</b>.</p>
@@ -632,7 +641,9 @@
       <div id="status" class="status"></div>
     </section>
 
+    <!-- STEP 2 + 3 -->
     <div class="stack">
+      <!-- STEP 2 -->
       <section class="card" id="step2">
         <div class="sectionTitle"><h2>Step 2. Copy your Signature</h2></div>
         <p class="sectionHelp">Click <b>Copy Signature</b>, then move to Step 3.</p>
@@ -677,6 +688,7 @@
         </div>
       </section>
 
+      <!-- STEP 3 -->
       <section class="card" id="step3">
         <div class="sectionTitle"><h2>Step 3. Add your signature + adjust settings</h2></div>
         <p class="sectionHelp">Complete all steps for the app(s) selected in Step 1.</p>
@@ -697,6 +709,7 @@
   </div>
 </div>
 
+<!-- HELP MODAL -->
 <div class="modalBackdrop" id="helpBackdrop" role="dialog" aria-modal="true" aria-labelledby="helpTitle">
   <div class="modal">
     <div class="modalTop">
@@ -758,7 +771,7 @@
     <div class="tabPanel" id="tab_gmail_mobile" role="tabpanel">
       <h3>Gmail (Mobile App)</h3>
       <ul>
-        <li><b>You do NOT create or paste a signature here.</b></li>
+        <li><b>You do NOT paste a signature here.</b></li>
         <li>Open the Gmail app → Menu → <b>Settings</b>.</li>
         <li>Tap your <b>Rowe Casa Organics</b> account.</li>
         <li>Open <b>Signature settings</b>.</li>
@@ -890,6 +903,7 @@
   </div>
 </div>
 
+<!-- IMAGE VIEWER MODAL -->
 <div class="modalBackdrop" id="imgBackdrop" role="dialog" aria-modal="true" aria-labelledby="imgTitle">
   <div class="imgModal">
     <div class="imgModalTop">
@@ -911,15 +925,11 @@
   // CONFIG
   // ============================================================
   const BRAND = Object.freeze({
-    version: "2025.6",
+    version: "2025.5",
     approvedDomain: "rowecasaorganics.com",
-
-    // ✅ Updated per request:
-    logoUrl: "https://cdn.shopify.com/s/files/1/0496/7717/2885/files/RoweCasaOrganicsSigLogo_Charcoal.png?v=1766428666",
-
+    logoUrl: "https://www.rowecasaorganics.com/cdn/shop/files/Checkout_Logo.png",
     websiteText: "rowecasaorganics.com",
     websiteUrl: "https://rowecasaorganics.com",
-
     logoWidthPx: 96,
     leftColPadRightPx: 14,
     dividerPx: 1,
@@ -937,12 +947,12 @@
     outlookMac: [ "Outlook-Mac-1.png", "Outlook-Mac-2.png" ],
     outlookWin: [ "Outlook-Win-1.png", "Outlook-Win-2.png" ],
     outlookApp: [ "Outlook-App-1.png", "Outlook-App-2.png", "Outlook-App-3.png", "Outlook-App-4.png" ],
+    // A couple quick entry points for desktop help tab thumbnails (we show more below)
     outlookDesktop: [ "Outlook-Mac-1.png", "Outlook-Win-1.png" ]
   });
 
   const $ = (id) => document.getElementById(id);
 
-  // ✅ Updated top-left icon to match signature logo
   $("uiLogo").src = BRAND.logoUrl;
 
   // ============================================================
@@ -1049,6 +1059,7 @@
   function validate(d){
     const issues = [];
 
+    // Require at least one selection
     if (!d.sel.gmailWeb && !d.sel.outlookDesktop && !d.sel.gmailMobile && !d.sel.outlookMobile){
       issues.push({ field:"apps", msg:"Select at least one app in Step 1." });
     }
@@ -1106,6 +1117,7 @@
     if (office) phoneLines.push(`<div>O: ${enc(office)}</div>`);
     const phonesBlock = phoneLines.length ? ("\n        " + phoneLines.join("\n        ") + "\n") : "\n";
 
+    // Divider as its own TD: helps Outlook retain a visible vertical line.
     return `<!-- =====================================================
      ROWE CASA ORGANICS EMAIL SIGNATURE
      Version: ${BRAND.version}
@@ -1242,7 +1254,7 @@
   }
 
   // ============================================================
-  // STEP 3 RENDERING
+  // STEP 3 RENDERING (conditional blocks + numbering)
   // ============================================================
   function screenshotUrl(filename){
     return SCREENSHOT_BASE + encodeURIComponent(filename);
@@ -1309,6 +1321,7 @@
       ].map(x => `<li>${x}</li>`).join("");
 
       blocks.push({
+        key: "gmailWeb",
         title: "Gmail (Web)",
         subtitle: "Set your signature in Gmail on your computer.",
         bullets,
@@ -1332,6 +1345,7 @@
       );
 
       blocks.push({
+        key: "outlookDesktop",
         title: "Outlook (Desktop)",
         subtitle: "Set your signature in Outlook on your computer.",
         bullets,
@@ -1350,6 +1364,7 @@
       ].map(x => `<li>${x}</li>`).join("");
 
       blocks.push({
+        key: "gmailMobile",
         title: "Gmail (Mobile App)",
         subtitle: "Turn off Mobile Signature so the web signature is used.",
         bullets,
@@ -1367,6 +1382,7 @@
       ].map(x => `<li>${x}</li>`).join("");
 
       blocks.push({
+        key: "outlookMobile",
         title: "Outlook (Mobile App)",
         subtitle: "Set your signature in the Outlook mobile app.",
         bullets,
@@ -1393,16 +1409,18 @@
   }
 
   // ============================================================
-  // HELP SHOTS
+  // HELP MODAL TABS + IMAGES
   // ============================================================
   function setHelpShots(){
-    const gw1 = screenshotUrl("Gmail-Web-1.png");
-    const gw2 = screenshotUrl("Gmail-Web-2.png");
+    // Gmail Web
+    const gw1 = screenshotUrl(SHOTS.gmailWeb[0]);
+    const gw2 = screenshotUrl(SHOTS.gmailWeb[1]);
     $("help_gw_1").src = gw1; $("help_gw_2").src = gw2;
     $("help_gw_1_btn").dataset.zoomSrc = gw1;
     $("help_gw_2_btn").dataset.zoomSrc = gw2;
 
-    ["Gmail-App-1.png","Gmail-App-2.png","Gmail-App-3.png","Gmail-App-4.png"].forEach((f, i) => {
+    // Gmail App (1-4)
+    SHOTS.gmailApp.forEach((f, i) => {
       const src = screenshotUrl(f);
       const img = $("help_ga_" + (i+1));
       const btn = $("help_ga_" + (i+1) + "_btn");
@@ -1410,7 +1428,8 @@
       if (btn) btn.dataset.zoomSrc = src;
     });
 
-    ["Outlook-App-1.png","Outlook-App-2.png","Outlook-App-3.png","Outlook-App-4.png"].forEach((f, i) => {
+    // Outlook App (1-4)
+    SHOTS.outlookApp.forEach((f, i) => {
       const src = screenshotUrl(f);
       const img = $("help_oa_" + (i+1));
       const btn = $("help_oa_" + (i+1) + "_btn");
@@ -1418,7 +1437,8 @@
       if (btn) btn.dataset.zoomSrc = src;
     });
 
-    ["Outlook-Mac-1.png","Outlook-Mac-2.png"].forEach((f, i) => {
+    // Outlook Mac (1-2)
+    SHOTS.outlookMac.forEach((f, i) => {
       const src = screenshotUrl(f);
       const img = $("help_om_" + (i+1));
       const btn = $("help_om_" + (i+1) + "_btn");
@@ -1426,7 +1446,8 @@
       if (btn) btn.dataset.zoomSrc = src;
     });
 
-    ["Outlook-Win-1.png","Outlook-Win-2.png"].forEach((f, i) => {
+    // Outlook Win (1-2)
+    SHOTS.outlookWin.forEach((f, i) => {
       const src = screenshotUrl(f);
       const img = $("help_ow_" + (i+1));
       const btn = $("help_ow_" + (i+1) + "_btn");
@@ -1434,17 +1455,18 @@
       if (btn) btn.dataset.zoomSrc = src;
     });
 
-    $("help_od_1").src = screenshotUrl("Outlook-Mac-1.png");
-    $("help_od_2").src = screenshotUrl("Outlook-Win-1.png");
-    $("help_od_1_btn").dataset.zoomSrc = screenshotUrl("Outlook-Mac-1.png");
-    $("help_od_2_btn").dataset.zoomSrc = screenshotUrl("Outlook-Win-1.png");
+    // Outlook Desktop "quick" (2 items at top tab)
+    $("help_od_1").src = screenshotUrl(SHOTS.outlookDesktop[0]);
+    $("help_od_2").src = screenshotUrl(SHOTS.outlookDesktop[1]);
+    $("help_od_1_btn").dataset.zoomSrc = screenshotUrl(SHOTS.outlookDesktop[0]);
+    $("help_od_2_btn").dataset.zoomSrc = screenshotUrl(SHOTS.outlookDesktop[1]);
   }
 
   function showHelpTab(key){
     document.querySelectorAll(".tabBtn").forEach(b => b.classList.remove("active"));
     document.querySelectorAll(".tabPanel").forEach(p => p.classList.remove("show"));
 
-    const btn = document.querySelector(\`.tabBtn[data-tab="\${key}"]\`);
+    const btn = document.querySelector(`.tabBtn[data-tab="${key}"]`);
     if (btn) btn.classList.add("active");
 
     const panel = document.getElementById("tab_" + key);
@@ -1483,6 +1505,7 @@
       badge.style.background = "rgba(10,122,47,.06)";
     }
 
+    // tiny toast
     try{
       const msg = document.createElement("div");
       msg.textContent = "✨ Konami mode unlocked.";
@@ -1496,6 +1519,7 @@
     } catch(_) {}
   }
 
+  // Konami listener (works anywhere; harmless)
   (function(){
     const KONAMI = ["ArrowUp","ArrowUp","ArrowDown","ArrowDown","ArrowLeft","ArrowRight","ArrowLeft","ArrowRight","b","a"];
     let idx = 0;
@@ -1521,6 +1545,7 @@
   })();
 
   function openAdmin(){
+    // If egg is unlocked, allow instant open without password prompt (secondary unlock)
     if (eggUnlocked){
       $("adminPanel").classList.add("show");
       $("adminPanel").setAttribute("aria-hidden", "false");
@@ -1610,6 +1635,9 @@
     window.scrollTo({ top: 0, behavior: "smooth" });
   }
 
+  // ============================================================
+  // DOWNLOAD
+  // ============================================================
   function downloadFile(filename, text){
     const blob = new Blob([text], { type: "text/html;charset=utf-8" });
     const a = document.createElement("a");
@@ -1645,8 +1673,10 @@
     }
   });
 
+  // Admin buttons
   $("btnAdminTop").addEventListener("click", openAdmin);
 
+  // Admin copy/save actions (delegated)
   document.addEventListener("click", async (e) => {
     if (e.target && e.target.id === "btnCopyText"){
       const out = render(false);
@@ -1678,16 +1708,19 @@
       setStatus(`<span class="ok">Saved!</span> File downloaded.`);
     }
 
+    // Screenshot zoom clicks (any thumbnail with data-zoom-src)
     const btn = e.target && e.target.closest && e.target.closest("[data-zoom-src]");
     if (btn && btn.dataset.zoomSrc){
       openImageViewer(btn.dataset.zoomTitle || "Screenshot", btn.dataset.zoomSrc);
     }
   });
 
+  // Phone formatting
   $("cell").addEventListener("blur", () => { $("cell").value = formatPhone($("cell").value); });
   $("phone").addEventListener("blur", () => { $("phone").value = formatPhone($("phone").value); });
   $("ext").addEventListener("blur", () => { $("ext").value = normalizeExt($("ext").value); });
 
+  // Help modal open/close + tabs
   const helpBackdrop = $("helpBackdrop");
   function openHelp(){
     helpBackdrop.style.display = "flex";
@@ -1704,15 +1737,13 @@
     btn.addEventListener("click", () => showHelpTab(btn.dataset.tab));
   });
 
+  // Image modal close
   const imgBackdrop = $("imgBackdrop");
-  function closeImageViewer(){
-    imgBackdrop.style.display = "none";
-    $("imgFull").src = "";
-  }
   $("btnCloseImg").addEventListener("click", closeImageViewer);
   $("btnCloseImgTop").addEventListener("click", closeImageViewer);
   imgBackdrop.addEventListener("click", (e) => { if (e.target === imgBackdrop) closeImageViewer(); });
 
+  // Global Esc
   document.addEventListener("keydown", (e) => {
     if (e.key === "Escape"){
       closeHelp();
@@ -1720,10 +1751,13 @@
     }
   });
 
+  // Init
   function init(){
     $("previewArea").innerHTML = `<div class="hint">Click <b>Build Signature</b> to create your signature.</div>`;
     renderStep3(getSelections());
     setStatus(`Select your apps, enter your details, then click <b>Build Signature</b>.`);
+
+    // Populate help tab screenshot URLs (raw github)
     setHelpShots();
   }
   init();
